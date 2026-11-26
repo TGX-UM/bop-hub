@@ -28,7 +28,7 @@ layout: default
 {%- endfor -%}
 </ul>
 {%- if found == 0 %}
-<p class="prose">No pathway uses this event yet.</p>
+<p class="prose">No BOP uses this event yet.</p>
 {%- endif %}
 
 {%- assign ups = site.relationships | where: "downstream_event", page.identifier -%}

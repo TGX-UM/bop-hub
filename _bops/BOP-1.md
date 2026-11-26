@@ -112,30 +112,30 @@ license: "CC0-1.0"
 
 ## Overall weight of evidence
 
-The spine of this pathway — energy deficit, AMPK activation, mTORC1 inhibition, autophagy and
-lipophagy, beta-oxidation and ketogenesis, insulin sensitivity, resolution of steatosis — is
-well supported, and the clinical endpoint is carried by a meta-analysis of 21 studies and 1226
+The spine of this pathway runs from energy deficit through AMPK activation, mTORC1
+inhibition, autophagy and lipophagy, beta-oxidation and ketogenesis and insulin
+sensitivity to resolution of steatosis. It is well supported, and the clinical endpoint is carried by a meta-analysis of 21 studies and 1226
 participants in which fasting decreased liver fat and steatosis independently of participant age,
 health status, weight status or intervention duration.
 
-Confidence is nevertheless rated **moderate** overall, for three reasons.
+Confidence is still rated **moderate** overall, and there are three reasons for that.
 
-**Quantitative understanding is low almost everywhere.** Most of the nineteen relationships are
-rated low on quantitative understanding. Fasting dose is defined by depth of energy deficit,
+First, quantitative understanding is low almost everywhere. Most of the nineteen
+relationships are rated low on it. Fasting dose is defined by depth of energy deficit,
 macronutrient composition and repetition over time, not duration alone, and the thresholds at
 which each step engages in human liver are largely unknown. The one real dose-response signal is
 observational: in a study of periodic fasting averaging 8.5 days, the reduction in fatty liver
 index tracked both fasting duration and the magnitude of BMI reduction.
 
-**One branch is weakly evidenced.** The urate branch — ketogenesis raising plasma urate, urate
-lowering hepatic oxidative stress — rests on the indirect observation that suppressing urate
-production with allopurinol worsens oxidative stress. Nothing in the source demonstrates that the
+Second, one branch is weakly evidenced. The urate branch, where ketogenesis raises plasma
+urate and urate lowers hepatic oxidative stress, rests on the indirect observation that
+suppressing urate production with allopurinol worsens oxidative stress. Nothing in the source demonstrates that the
 fasting-induced urate rise is what lowers hepatic oxidative stress. It is recorded because the
 source argues for it, and rated `empirical_support: low` with `essentiality: weak` so that the
 weakness is visible rather than buried.
 
-**The intervention is not unitary.** Fasting is a family of practices, from water-only
-abstinence through fasting-mimicking diets to time-restricted eating, that differ in duration,
+Third, the intervention is not one thing. Fasting covers water-only abstinence,
+fasting-mimicking diets and time-restricted eating, which differ in duration,
 macronutrient composition and energy load. The TREATY-FLD trial found 8-hour time-restricted
 eating gave no liver-fat reduction beyond caloric restriction, which suggests that in that
 protocol the benefit was mediated by weight loss rather than by fasting as such. A single
@@ -171,9 +171,9 @@ fast. Uncontrolled type 1 diabetes risks unrestrained ketone accumulation and ke
 ## Relationship to AOP-Wiki
 
 Nine AOPs in AOP-Wiki release 2026.11.21 terminate in hepatic steatosis, and all nine are
-recorded above as pathways this BOP counteracts. The convergence is the substantive point: one
-beneficial pathway can act against a whole family of adverse ones that start from quite different
-molecular initiating events.
+recorded above as pathways this BOP counteracts. That convergence is worth dwelling on: a
+single beneficial pathway can act against a whole family of adverse ones that begin from
+quite different molecular initiating events.
 
 Two event-level crosswalks are recorded. `BOPE:0007` **is** AOP-Wiki key event 1312, "Increase,
 Fatty acid beta-oxidation", reused rather than re-minted, and its adverse mirror is key event 179.

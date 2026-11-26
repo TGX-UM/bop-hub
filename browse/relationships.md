@@ -20,7 +20,7 @@ how essential each is.</p>
       <th scope="col">Biological<br>plausibility</th>
       <th scope="col">Empirical<br>support</th>
       <th scope="col">Quantitative<br>understanding</th>
-      <th scope="col" class="num">Pathways</th>
+      <th scope="col" class="num">BOPs</th>
     </tr>
   </thead>
   <tbody>

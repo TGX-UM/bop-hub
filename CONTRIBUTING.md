@@ -2,24 +2,28 @@
 
 ## Three ways in, easiest first
 
-**1. Describe the pathway and let a maintainer write it up.** This is the expected route
-for domain experts, not a fallback.
+### Describe it and let a maintainer write it up
+
+This is the route we expect domain experts to take, not a fallback.
 [Open a "Propose a pathway" issue](https://github.com/TGX-UM/bop-hub/issues/new/choose):
 tell us the intervention, the chain of events, the outcome, and the papers behind each
 step. A maintainer turns that into the files and puts your name on it as curator. You
 never touch YAML.
 
-**2. Fix a page in the browser.** Every page has an "Edit this page on GitHub" link at
-the bottom. Use it for a typo, a clarification, or an added reference. GitHub handles the
-fork and pull request for you.
+### Fix a page in the browser
 
-**3. Fork and curate.** Full control. The walkthrough below.
+Every page has an "Edit this page on GitHub" link at the bottom. Use it for a typo, a
+clarification, an added reference. GitHub handles the fork and the pull request.
 
-However you contribute, your git identity — the name and email on your commits — becomes
+### Fork and curate
+
+Full control. The walkthrough below.
+
+However you contribute, your git identity, the name and email on your commits, becomes
 a permanent part of the public history. If you would rather not have a personal email in
 there, set a different one on this repository before committing.
 
-## Adding a pathway, start to finish
+## Adding a BOP, start to finish
 
 ### Allocate identifiers
 
@@ -31,22 +35,22 @@ python tools/next_id.py relationship -n 3 # BOPR:0020 …
 
 Allocation is "highest existing plus one". If two pull requests claim the same number,
 git reports an add/add conflict on the filename, which is what we want: identifiers are
-never silently reused. Once issued, an identifier is never reused or renumbered — a
+never silently reused. Once issued, an identifier is never reused or renumbered. A
 retired page gets `status: deprecated` plus `replaced_by:`.
 
 **The filename is the identifier.** `BOP:2` lives in `_bops/BOP-2.md`; `BOPE:0014` in
-`_events/BOPE-0014.md`; `MONDO:0013209` in `_annotations/MONDO_0013209.md` — with an
+`_events/BOPE-0014.md`; `MONDO:0013209` in `_annotations/MONDO_0013209.md`, with an
 underscore, because a colon in a filename breaks checkouts on Windows.
 
 ### Reuse before you mint
 
-**Before creating an event, look for it in `_events/` and then in
-[AOP-Wiki](https://aopwiki.org/events).** This is the rule that decides whether BOP-Hub
-becomes interoperable or an island, so it gets its own heading.
+Before creating an event, look for it in `_events/` and then in
+[AOP-Wiki](https://aopwiki.org/events). This is what decides whether BOP-Hub ends up
+connected to anything, which is why it gets its own heading.
 
 - The event already exists in AOP-Wiki, same direction and level → create the page and
   set `aopwiki_ke: "aop.events:1312"`. You are reusing it, not re-minting it.
-- AOP-Wiki has the *opposite* direction — same object, opposite action → that is **not**
+- AOP-Wiki has the *opposite* direction, same object and opposite action: that is **not**
   the same event. Set `aopwiki_mirror_ke:` instead. This is what makes a pathway readable
   against the adverse pathways it counteracts, and conflating the two destroys exactly
   that.
@@ -71,12 +75,12 @@ that grades mean the same thing across pages.
 
 **Mechanistic plausibility alone is `empirical_support: low`, not `moderate`.** If no
 study measured the two events and related them, the support is low however convincing the
-mechanism. This is where a resource about beneficial effects is most prone to optimism,
-so it is the rating to be strictest about.
+mechanism. This is where a resource about beneficial effects slides into optimism, so it
+is the rating to be strictest about.
 
 Every relationship needs at least one reference with a DOI or a PMID. Say in the page
-body what *kind* of evidence it is — human randomised trial, cohort, animal, in vitro,
-in silico — because the grade alone does not carry that.
+body what kind of evidence it is: human randomised trial, cohort, animal, in vitro, in
+silico. The grade alone does not carry that.
 
 Then, on the pathway that uses the link, record `essentiality` (how much the pathway
 depends on this step) and `confidence` (how sure you are of it *in this pathway*). Those
@@ -86,7 +90,7 @@ are context judgements and belong to the pathway, not the relationship.
 
 **Quote a CURIE if it has a space after the colon.** `- MONDO: 0013209` is read by YAML
 as the mapping `{MONDO: 13209}` and the leading zeros are gone. Written without the
-space, `- MONDO:0013209` is a plain string and is fine — but quoting everything
+space, `- MONDO:0013209` is a plain string and is fine. Quoting everything
 (`"MONDO:0013209"`) is the habit that never bites.
 
 **Quote a bare zero-padded number.** `identifier: 0001` becomes the integer `1`. With its prefix,
@@ -130,11 +134,10 @@ docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app -p 4000:4000 \
 
 The front matter is the data; the body is where you say what the data cannot.
 
-Write for a reader who knows the biology but not this pathway. Explain *why* a grade is
-what it is, especially when it is low — "empirical support is low because the only
-evidence is X" is worth more than the word "low" on its own. Name the weakest link
-explicitly; a pathway that admits where it is thin is more useful and more credible than
-one that does not.
+Write for a reader who knows the biology but not this pathway. Explain why a grade is what
+it is, especially when it is low. "Empirical support is low because the only evidence is X"
+is worth far more than the bare word "low". Name the weakest link outright. A pathway that
+admits where it is thin is more useful than one that does not, and more credible.
 
 Do not copy descriptive text from AOP-Wiki. Its content is CC BY-SA 4.0, and this
 repository is CC0; pulling its prose in would drag an incompatible licence with it.
@@ -144,10 +147,10 @@ Cross-reference its identifiers freely and write your own descriptions.
 
 A maintainer checks that the validator passes, that the evidence grades match what the
 cited papers actually show, that reuse was attempted before new events were minted, and
-that the prose explains the grades. Expect a first response within about two weeks.
+that the prose explains the grades. Expect a first response within a fortnight or so.
 
-Everything starts at `status: draft`. Promotion to `under-review` and then `endorsed`
-needs a curator other than the author. There is no automatic promotion.
+Everything starts at `status: draft`. Getting to `under-review` and then `endorsed` needs
+a curator other than the author. Nothing is promoted automatically.
 
 By contributing you agree to release curated content under
 [CC0 1.0](LICENSE-CONTENT) and code under the [MIT licence](LICENSE), and to follow the

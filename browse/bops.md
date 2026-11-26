@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Pathways
+title: BOPs
 permalink: /browse/bops/
 description: Every beneficial outcome pathway curated in BOP-Hub.
 ---
 
-<h1>Pathways</h1>
+<h1>Beneficial outcome pathways</h1>
 
 <p class="lede">Every beneficial outcome pathway curated here, with the number of events
 and links it assembles and the overall confidence placed in it.</p>
@@ -14,7 +14,7 @@ and links it assembles and the overall confidence placed in it.</p>
 <table>
   <thead>
     <tr>
-      <th scope="col">Pathway</th>
+      <th scope="col">BOP</th>
       <th scope="col">Beneficial outcome</th>
       <th scope="col">Status</th>
       <th scope="col" class="num">Events</th>

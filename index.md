@@ -6,15 +6,14 @@ description: A community-curated knowledge base of Beneficial Outcome Pathways, 
 
 <h1>Beneficial Outcome Pathways</h1>
 
-<p class="lede">A beneficial outcome pathway records how a beneficial exposure or
-intervention leads, step by measurable step, to a health benefit — and how good the
-evidence is for each step. BOP-Hub curates them in the same grammar that
-<a href="https://aopwiki.org/">AOP-Wiki</a> uses for harm, so the two can be read
-together.</p>
+<p class="lede">A beneficial outcome pathway sets out how an intervention leads to a
+health benefit, one measurable step at a time, and says how good the evidence is for each
+step. BOP-Hub curates them in the grammar <a href="https://aopwiki.org/">AOP-Wiki</a>
+uses for harm, so you can read the two against each other.</p>
 
-{%- assign bop = site.bops | sort: "id" | first %}
+{%- assign bop = site.bops | sort: "identifier" | first %}
 {%- if bop %}
-<h2>The pathway curated so far</h2>
+<h2>The BOP curated so far</h2>
 
 <p><a href="{{ bop.url | relative_url }}"><strong>{{ bop.title }}</strong></a><br>
 <span class="ident">{{ bop.identifier }} · {{ bop.events | size }} events · {{ bop.relationships | size }} relationships · overall confidence {{ bop.overall_confidence }}</span></p>
@@ -40,52 +39,48 @@ together.</p>
 <h2>What is in here</h2>
 
 <dl class="counts">
-  <div><dt>Pathways</dt><dd>{{ site.bops | size }}</dd></div>
+  <div><dt>BOPs</dt><dd>{{ site.bops | size }}</dd></div>
   <div><dt>Events</dt><dd>{{ site.events | size }}</dd></div>
   <div><dt>Relationships</dt><dd>{{ site.relationships | size }}</dd></div>
   <div><dt>Ontology terms</dt><dd>{{ site.annotations | size }}</dd></div>
 </dl>
 
 <div class="caveat">
-  <p><strong>Version 0. The schema is not yet stable.</strong> Expect breaking changes
-  to the content model before 1.0. Identifiers, once issued, will not be reused or
-  renumbered.</p>
+  <p><strong>Version 0. The schema is not stable yet.</strong> Expect it to change in ways
+  that break things before 1.0. Identifiers are the exception: once issued, one is never
+  reused and never renumbered.</p>
   <p><strong>Nothing here is medical advice.</strong> BOP-Hub maps mechanisms and the
-  evidence behind them. It does not recommend treatments, authorise health claims, or
-  substitute for regulatory assessment.</p>
+  evidence behind them. It does not tell anyone what to eat or what to take, and a BOP
+  carries no regulatory standing of any kind.</p>
 </div>
 
 <h2>How it is put together</h2>
 
 <div class="prose">
-<p>Four kinds of page, and one rule that makes them worth separating.</p>
+<p>Four kinds of page. A <strong>BOP</strong> assembles events into a causal chain and
+rates how much the chain depends on each link. An <strong>event</strong> is a measurable
+biological change, and the same event can turn up in many BOPs. A
+<strong>relationship</strong> is a causal link between two events, carrying the evidence
+for that link. A <strong>term</strong> is an ontology concept that says where a BOP
+applies.</p>
 
-<ul>
-  <li>A <strong>pathway</strong> assembles events into a causal chain and rates how
-  essential each link is to that chain.</li>
-  <li>An <strong>event</strong> is a measurable biological change. Events are reusable:
-  the same event can appear in many pathways.</li>
-  <li>A <strong>relationship</strong> is a causal link between two events, carrying the
-  evidence for the link itself.</li>
-  <li>A <strong>term</strong> is an ontology concept used to say where a pathway applies.</li>
-</ul>
+<p>One rule holds the whole thing together: the part an event plays belongs to the BOP,
+not to the event. Improved insulin sensitivity is where one BOP ends and a waypoint in
+another. Pin the part to the event page and that becomes impossible, which is the reason
+events can be shared at all.</p>
 
-<p>The rule: the part an event plays — the trigger, a step along the way, or the
-outcome — belongs to the pathway, not to the event. Improved insulin sensitivity is
-the endpoint of one pathway and a step on the way to another. Recording the part on
-the event page would make that impossible, and it is why events can be shared at all.</p>
-
-<p>The same reasoning applies across frameworks. An event that is beneficial here may
-be the adverse direction of an event already in AOP-Wiki; where that is so, both are
-recorded, and kept distinct.</p>
+<p>The same logic reaches across to AOP-Wiki. An event that is beneficial here may be the
+adverse direction of one already recorded there. Both get written down, and they are kept
+apart.</p>
 </div>
 
 <h2>Contribute</h2>
 
 <div class="prose">
-<p>You do not need to know Jekyll, or write any YAML, to add a pathway.
+<p>You do not need to know Jekyll, or write a line of YAML, to add a BOP.
 <a href="https://github.com/{{ site.github_username }}/{{ site.github_repo }}/issues/new/choose">Open
-an issue describing the pathway and its evidence</a>, and a maintainer will write it up
-with you. If you would rather do it yourself, <a href="{{ '/contribute/' | relative_url }}">the
-contributor guide</a> walks through adding one from start to finish.</p>
+an issue describing the pathway and its evidence</a> and a maintainer will write it up with
+you. If you would rather do it yourself,
+<a href="{{ '/contribute/' | relative_url }}">the contributor guide</a> goes through adding
+one from start to finish.</p>
 </div>

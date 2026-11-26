@@ -18,7 +18,7 @@ molecules up to populations.</p>
 <h2>{{ level | capitalize }} <span class="ident">{{ group.size }}</span></h2>
 <div class="table-scroll">
 <table>
-  <thead><tr><th scope="col">Event</th><th scope="col">Process term</th><th scope="col">In AOP-Wiki</th><th scope="col" class="num">Pathways</th></tr></thead>
+  <thead><tr><th scope="col">Event</th><th scope="col">Process term</th><th scope="col">In AOP-Wiki</th><th scope="col" class="num">BOPs</th></tr></thead>
   <tbody>
   {%- for ev in group %}
     {%- assign uses = 0 %}
