@@ -7,7 +7,7 @@ abstract: >-
   events, to a benefit to health. The beneficial counterpart to AOP-Wiki, using
   the same event and relationship grammar so that beneficial and adverse
   pathways can be read together.
-type: software
+type: dataset
 authors:
   - given-names: Marvin
     family-names: Martens
@@ -15,8 +15,9 @@ authors:
     affiliation: "Department of Translational Genomics, Maastricht University"
 repository-code: "https://github.com/TGX-UM/bop-hub"
 url: "https://tgx-um.github.io/bop-hub/"
-license: MIT
-license-url: "https://github.com/TGX-UM/bop-hub/blob/main/LICENSE"
+license:
+  - CC0-1.0
+  - MIT
 keywords:
   - beneficial outcome pathway
   - adverse outcome pathway
