@@ -75,6 +75,11 @@ Pull requests get reviewed by a maintainer and checked automatically against the
 schema. Everything starts at `status: draft`; getting past draft needs a curator other
 than the author.
 
+If you are touching how anything looks -- the stylesheet, a figure, a slide, a poster --
+read [BRAND.md](BRAND.md) first. It carries the palette, the logo rules, and the two places
+where colour is allowed to mean something on this resource. The colour values live in
+`assets/main.scss` and `tools/bophub_palette.py`; do not retype a hex code from memory.
+
 ## Machine-readable access
 
 - [`/api/bops.json`](https://tgx-um.github.io/bop-hub/api/bops.json): BOPs with their events, edges and applicability

@@ -1,0 +1,75 @@
+# BOP-Hub matplotlib style. Load through tools.bophub_palette.use_style(), which
+# also installs the colour cycle for dark grounds. Values are explained in BRAND.md.
+
+# -- colour cycle: assigned in order, never extended beyond five --------------
+axes.prop_cycle: cycler('color', ['1478A1', 'AE0B12', '4AA519', 'B972F1', '81168C'])
+
+# -- type ---------------------------------------------------------------------
+font.family:        sans-serif
+font.sans-serif:    Open Sans, Segoe UI, DejaVu Sans, Helvetica Neue, Arial
+font.size:          9
+axes.titlesize:     10
+axes.titleweight:   semibold
+axes.titlelocation: left
+axes.titlepad:      10
+axes.labelsize:     9
+xtick.labelsize:    8.5
+ytick.labelsize:    8.5
+legend.fontsize:    8.5
+
+# -- text colours: never a series colour --------------------------------------
+text.color:         333333
+axes.titlecolor:    001C3D
+axes.labelcolor:    333333
+xtick.color:        565C66
+ytick.color:        565C66
+
+# -- recessive frame and grid -------------------------------------------------
+axes.facecolor:     FFFFFF
+figure.facecolor:   FFFFFF
+axes.edgecolor:     C9CED6
+axes.linewidth:     0.8
+axes.spines.top:    False
+axes.spines.right:  False
+axes.grid:          True
+axes.grid.axis:     y
+grid.color:         E3E3E3
+grid.linewidth:     0.7
+grid.alpha:         1.0
+axes.axisbelow:     True
+xtick.direction:    out
+ytick.direction:    out
+xtick.major.size:   3
+ytick.major.size:   3
+xtick.minor.size:   0
+ytick.minor.size:   0
+
+# -- marks --------------------------------------------------------------------
+lines.linewidth:        2.0
+lines.markersize:       5.5
+lines.solid_capstyle:   round
+patch.linewidth:        0.8
+patch.edgecolor:        FFFFFF
+patch.force_edgecolor:  True
+errorbar.capsize:       2.5
+scatter.marker:         o
+
+# -- legend: present for two or more series, never a box that fights the data --
+legend.frameon:         False
+legend.handlelength:    1.4
+legend.handletextpad:   0.5
+legend.columnspacing:   1.4
+legend.borderaxespad:   0.0
+
+# -- output -------------------------------------------------------------------
+figure.dpi:         110
+savefig.dpi:        300
+figure.figsize:     5.5, 3.4
+figure.autolayout:  False
+figure.constrained_layout.use: True
+savefig.bbox:       tight
+savefig.pad_inches: 0.03
+savefig.transparent: False
+svg.fonttype:       none
+pdf.fonttype:       42
+ps.fonttype:        42
