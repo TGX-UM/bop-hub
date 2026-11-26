@@ -27,6 +27,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install dependencies
-        run: pip install --require-hashes=false -r tools/requirements.txt
+        run: pip install -r tools/requirements.txt
       - name: Validate
         run: python tools/validate.py
