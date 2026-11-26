@@ -9,16 +9,22 @@
 Allocation is simply "highest existing + 1". Concurrent pull requests that
 both claim the same number collide as a git add/add conflict on the filename,
 which is the behaviour we want: identifiers are never silently reused.
+
+The highest-existing scan reads the `identifier:` in each record's front
+matter via tools/bophub, not the filename, so a file whose name and
+identifier disagree cannot quietly shift the next allocation. The two are
+required to match anyway -- tools/validate.py errors otherwise.
 """
 
 from __future__ import annotations
 
 import argparse
 import pathlib
-import re
 import sys
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+
+from bophub import load  # noqa: E402
 
 KINDS = {
     #            directory          prefix   zero-padding
@@ -28,19 +34,6 @@ KINDS = {
 }
 
 
-def highest(directory: str, prefix: str) -> int:
-    base = ROOT / directory
-    if not base.is_dir():
-        return 0
-    pattern = re.compile(rf"^{re.escape(prefix)}-(\d+)$")
-    numbers = [
-        int(m.group(1))
-        for path in base.glob("*.md")
-        if (m := pattern.match(path.stem))
-    ]
-    return max(numbers, default=0)
-
-
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -48,14 +41,24 @@ def main() -> int:
     parser.add_argument("-n", "--count", type=int, default=1, help="how many ids to allocate")
     parser.add_argument("--filename", action="store_true",
                         help="print the filename to create instead of the id")
+    parser.add_argument("--root", type=pathlib.Path, default=load.DEFAULT_ROOT,
+                        help="repository root to scan (default: the one this script is in)")
     args = parser.parse_args()
 
     if args.count < 1:
         print("--count must be at least 1", file=sys.stderr)
         return 2
 
+    report = load.Report()
+    docs, _ = load.load_documents(report, args.root.resolve())
+    if report.errors:
+        for line in report.errors:
+            print(f"ERROR    {line}", file=sys.stderr)
+        print("content does not load; fix it before allocating identifiers", file=sys.stderr)
+        return 1
+
     directory, prefix, pad = KINDS[args.kind]
-    start = highest(directory, prefix) + 1
+    start = int(load.next_ids(docs)[args.kind].split(":", 1)[1])
 
     for number in range(start, start + args.count):
         body = f"{number:0{pad}d}" if pad else str(number)
