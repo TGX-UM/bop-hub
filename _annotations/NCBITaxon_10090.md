@@ -1,5 +1,5 @@
 ---
-id: "NCBITaxon:10090"
+identifier: "NCBITaxon:10090"
 label: "Mus musculus"
 slot: [taxa]
 ontology: NCBITaxon

@@ -1,0 +1,45 @@
+{%- comment -%}
+  One row per relationship. The three Bradford-Hill dimensions come from the
+  relationship page (intrinsic to the causal link); essentiality and
+  confidence come from this BOP's own entry (context-dependent).
+{%- endcomment -%}
+<div class="table-scroll">
+<table>
+  <caption>
+    Weight of evidence for each of the {{ page.relationships | size }} relationships.
+    Biological plausibility, empirical support and quantitative understanding are
+    properties of the causal link itself. Essentiality and confidence are assigned
+    by this pathway, in its own context.
+  </caption>
+  <thead>
+    <tr>
+      <th scope="col">Relationship</th>
+      <th scope="col">Adjacency</th>
+      <th scope="col">Biological<br>plausibility</th>
+      <th scope="col">Empirical<br>support</th>
+      <th scope="col">Quantitative<br>understanding</th>
+      <th scope="col">Essentiality<br>here</th>
+      <th scope="col">Confidence<br>here</th>
+    </tr>
+  </thead>
+  <tbody>
+  {%- for item in page.relationships -%}
+    {%- assign ker = site.relationships | where: "identifier", item.ker | first -%}
+    <tr>
+      <td>
+        {%- if ker -%}<a href="{{ ker.url | relative_url }}">{{ ker.title }}</a>
+        {%- else -%}{{ item.ker }} <em>(no page)</em>{%- endif -%}
+        <br><span class="ident">{{ item.ker }}</span>
+        {%- if item.comment %}<br><span class="ev-word">{{ item.comment }}</span>{% endif -%}
+      </td>
+      <td>{{ ker.adjacency | default: "—" }}</td>
+      <td>{% include evidence.html grade=ker.evidence.biological_plausibility %}</td>
+      <td>{% include evidence.html grade=ker.evidence.empirical_support %}</td>
+      <td>{% include evidence.html grade=ker.evidence.quantitative_understanding %}</td>
+      <td>{{ item.essentiality | default: "not-specified" }}</td>
+      <td>{% include evidence.html grade=item.confidence %}</td>
+    </tr>
+  {%- endfor -%}
+  </tbody>
+</table>
+</div>

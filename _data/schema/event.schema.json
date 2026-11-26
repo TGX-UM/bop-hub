@@ -4,7 +4,7 @@
   "title": "Event (initiating event, key event or beneficial outcome)",
   "type": "object",
   "required": [
-    "id",
+    "identifier",
     "title",
     "description",
     "biological_level",
@@ -25,9 +25,10 @@
         "type": "string"
       }
     },
-    "id": {
+    "identifier": {
       "type": "string",
-      "pattern": "^BOPE:[0-9]{4}$"
+      "pattern": "^BOPE:[0-9]{4}$",
+      "description": "The page's own identifier. NOT named `id`: Jekyll's Document#id shadows a front-matter `id` and returns the document path instead, so every Liquid lookup silently fails. See CONTRIBUTING.md."
     },
     "title": {
       "type": "string",

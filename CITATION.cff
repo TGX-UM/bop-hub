@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+title: "BOP-Hub: a knowledge base of Beneficial Outcome Pathways"
+message: "If you use BOP-Hub, please cite it as below."
+abstract: >-
+  A community-curated knowledge base of beneficial outcome pathways: causal
+  chains linking a beneficial exposure or intervention, through measurable key
+  events, to a benefit to health. The beneficial counterpart to AOP-Wiki, using
+  the same event and relationship grammar so that beneficial and adverse
+  pathways can be read together.
+type: software
+authors:
+  - given-names: Marvin
+    family-names: Martens
+    orcid: "https://orcid.org/0000-0003-2230-0840"
+    affiliation: "Department of Translational Genomics, Maastricht University"
+repository-code: "https://github.com/TGX-UM/bop-hub"
+url: "https://tgx-um.github.io/bop-hub/"
+license: MIT
+license-url: "https://github.com/TGX-UM/bop-hub/blob/main/LICENSE"
+keywords:
+  - beneficial outcome pathway
+  - adverse outcome pathway
+  - mechanistic toxicology
+  - nutrition
+  - FAIR data
+  - knowledge base
+references:
+  - type: article
+    title: >-
+      Beneficial Outcome Pathways: A New Mechanistic Framework to Map the Health
+      Effects of Fasting in Metabolic Dysfunction-Associated Steatotic Liver Disease
+    authors:
+      - given-names: Robin
+        family-names: Mesnage
+      - given-names: Verena
+        family-names: Buchinger
+    journal: "Journal of Nutrition and Metabolism"
+    year: 2026
+    volume: "2026"
+    doi: 10.1155/jnme/3190642
+    notes: "The paper that introduced the beneficial outcome pathway framework, and the source of BOP:1."

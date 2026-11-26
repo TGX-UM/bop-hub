@@ -1,347 +1,201 @@
 ---
-
+# Front matter (even empty) is what makes Jekyll process this file.
 ---
 
-@import "{{ site.theme }}";
+/* ==========================================================================
+   BOP-Hub stylesheet
 
-* {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-    box-sizing: content-box;
+   Maastricht University house style. The palette is the institutional one,
+   with the two accents taken from the Department of Translational Genomics
+   mark, which is drawn in #001C3D, #00A2DB and #E84E10.
+
+   UM's own library documents that the published house-style colours do not
+   meet WCAG contrast and works from darkened variants for text. The same is
+   done here: #00A2DB reaches only 2.9:1 on white, so links use #0076A8
+   (5.1:1). The mark keeps its own colours; only text and interface elements
+   are adjusted.
+
+   Two rules carry meaning rather than decoration, and the rest of the sheet
+   stays out of their way:
+
+   1. COLOUR ENCODES THE PART AN EVENT PLAYS, not how good it is. Initiating
+      events take the mark's orange, beneficial outcomes its blue, key events
+      a plain navy rule.
+   2. EVIDENCE STRENGTH IS NEVER COLOUR. It is a filled-bar glyph next to its
+      own word. A green "high" on a resource about beneficial effects would
+      read as "this is good for you", which is the single misreading this
+      resource most has to avoid.
+   ========================================================================== */
+
+:root {
+  --navy:        #001c3d;   /* house-style dark blue: headers, headings */
+  --blue:        #00a2db;   /* the mark's blue -- fills and rules only */
+  --orange:      #e84e10;   /* the mark's orange -- fills and rules only */
+
+  --link:        #0076a8;   /* darkened accent, 5.1:1 on white */
+  --link-hover:  #d2460f;   /* house-style hover */
+  --ink:         #333;      /* house-style body text */
+  --muted:       #565c66;   /* labels and identifiers, 4.6:1 on white */
+  --rule:        #e3e3e3;
+  --rule-strong: #c9ced6;
+  --wash:        #f6f7f9;
+  --paper:       #fff;
+
+  --measure:     68ch;      /* prose line length */
+  --gutter:      1.5rem;
 }
 
-*:before,
-*:after {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-    box-sizing: content-box;
+/* Open Sans is UM's own named substitute for the licensed Thesis Sans, and is
+   what the university library's site runs on. It is not fetched from a third
+   party: where it is installed it is used, otherwise the stack degrades to the
+   platform UI face. Vendoring a subset of the Apache-2.0 files is a follow-up. */
+html {
+  -webkit-text-size-adjust: 100%;
+  font-family: "Open Sans", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
 }
 
-@media (min-width: 800px) {
-  .wrapper {
-    max-width: 1190px;
-    width: 100%;
-    font-family: 'Helvetica Neue';
-  }
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-size: 1.0625rem;
+  line-height: 1.6;
 }
 
-@media only screen and (max-width: 800px) {
-  .row-main {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    margin-right: -215px;
-    margin-left: -215px;
-    flex-direction: column;
-  }
+/* ---- skeleton ---------------------------------------------------------- */
+.wrap { width: 100%; max-width: 64rem; margin: 0 auto; padding: 0 var(--gutter); }
+main  { display: block; padding: 2.5rem 0 4rem; }
+.prose { max-width: var(--measure); }
 
-  .main-top-left {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    margin-right: -215px;
-    margin-left: 215px;
-  }
+/* ---- type ------------------------------------------------------------- */
+h1, h2, h3, h4 { color: var(--navy); font-weight: 600; line-height: 1.2; margin: 0 0 .5em; }
+h1 { font-size: clamp(1.75rem, 1.2rem + 2vw, 2.6rem); letter-spacing: -.02em; }
+h2 { font-size: 1.4rem; margin-top: 2.25em; }
+h3 { font-size: 1.1rem; margin-top: 1.75em; }
+p, ul, ol, table { margin: 0 0 1.1em; }
+.prose ul, .prose ol { padding-left: 1.3em; }
+.prose li { margin-bottom: .35em; }
+strong { font-weight: 600; color: var(--navy); }
+
+a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+a:hover { color: var(--link-hover); }
+a:focus-visible, button:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--link); outline-offset: 2px; border-radius: 2px;
 }
 
+code, .mono { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: .9em; }
+.prose code { background: var(--wash); padding: .1em .35em; border-radius: 3px; }
 
-/* HEADER */
-.page-content {
-  padding: 15px 0px;
+/* An identifier is a handle, not a heading: small, monospaced, muted. */
+.ident { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+         font-size: .8rem; color: var(--muted); }
+
+/* ---- header ------------------------------------------------------------ */
+.site-head { background: var(--navy); color: #fff; }
+.site-head .wrap { display: flex; flex-wrap: wrap; align-items: baseline;
+                   gap: .4rem 1.5rem; padding-top: .9rem; padding-bottom: .9rem; }
+.site-head a { color: #fff; text-decoration: none; }
+.site-name { font-size: 1.2rem; font-weight: 700; letter-spacing: -.01em; }
+.site-name:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.site-tag { color: #b9c4d2; font-size: .9rem; margin-right: auto; }
+.site-nav { display: flex; flex-wrap: wrap; gap: 1.1rem; font-size: .95rem; }
+.site-nav a:hover, .site-nav a[aria-current="page"] {
+  text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px;
 }
+.site-nav a[aria-current="page"] { text-decoration-color: var(--blue); }
 
-.site-header {
-  border-bottom: none;
-  background-color: #EEEEEE;
-}
+/* ---- role encoding ----------------------------------------------------- */
+/* The one place colour carries meaning. Each role keeps a shape cue too, so
+   the encoding survives greyscale printing and colour-vision differences. */
+.role { font-size: .75rem; font-weight: 600; color: var(--navy); white-space: nowrap; }
+.role::before { content: ""; display: inline-block; width: .55rem; height: .55rem;
+                margin-right: .4rem; vertical-align: baseline; background: var(--navy); }
+.role-initiating::before { background: var(--orange); border-radius: 50%; }   /* round: the trigger */
+.role-outcome::before    { background: var(--blue); }                          /* square: the endpoint */
+.role-key::before        { background: transparent; border: 2px solid var(--rule-strong);
+                           transform: rotate(45deg); }                         /* diamond: in between */
 
-.navbar-brand {
-  font-size: 2em;
-}
+/* ---- tables ------------------------------------------------------------ */
+.table-scroll { overflow-x: auto; margin: 0 0 1.5em; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+caption { text-align: left; color: var(--muted); font-size: .9rem; padding-bottom: .5rem; }
+th, td { text-align: left; padding: .55rem .7rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+thead th { color: var(--navy); font-weight: 600; border-bottom: 2px solid var(--rule-strong);
+           font-size: .85rem; }
+tbody tr:hover { background: var(--wash); }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
 
-.navbar {
-  padding: 0px 0px 10px 0px;
-}
+/* An event row carries its role on its leading edge. */
+.ev-row { border-left: 4px solid var(--rule-strong); }
+.ev-row.is-initiating { border-left-color: var(--orange); }
+.ev-row.is-outcome    { border-left-color: var(--blue); }
 
-/* MAIN */
-.home-page-content {
-  padding: 0px 0px 30px 0px;
-}
+/* ---- evidence glyph ---------------------------------------------------- */
+/* Three bars, filled by grade, followed by the word. Never colour-coded. */
+.ev { white-space: nowrap; }
+.ev-bars { font-family: ui-monospace, Menlo, Consolas, monospace; letter-spacing: .05em;
+           color: var(--navy); margin-right: .35rem; }
+.ev-word { color: var(--muted); font-size: .9em; }
 
-.outer-container {
-  width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-}
+/* ---- chips ------------------------------------------------------------- */
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0 0 1.2em; padding: 0; list-style: none; }
+.chip { display: inline-block; padding: .2rem .6rem; border: 1px solid var(--rule-strong);
+        border-radius: 999px; font-size: .85rem; text-decoration: none; background: var(--paper); }
+.chip:hover { border-color: var(--link); background: var(--wash); }
+.chip .ident { font-size: .75rem; margin-left: .3rem; }
+.chip-dead { color: var(--muted); border-style: dashed; }
 
-/* TAGS */
+.slot { margin: 0 0 1em; }
+.slot-name { color: var(--navy); font-weight: 600; font-size: .9rem; margin: 0 0 .35rem; }
 
-h1 {
-  font-size: 2em;
-  font-family: 'Helvetica Neue';
-}
+/* ---- diagram ----------------------------------------------------------- */
+.diagram { margin: 0 0 1.5em; padding: 0; border: 1px solid var(--rule); background: var(--wash); }
+.diagram pre.mermaid { margin: 0; padding: 1rem; overflow-x: auto; text-align: center; }
+.diagram figcaption { padding: .6rem 1rem; border-top: 1px solid var(--rule);
+                      color: var(--muted); font-size: .85rem; }
+/* Until Mermaid runs, the raw flowchart source would flash on screen. */
+pre.mermaid:not([data-processed]) { visibility: hidden; }
 
-h2 {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin-bottom: 5px;
-    margin-top: 25px;
-  font-family: 'Helvetica Neue';
-}
+/* ---- key/value block -------------------------------------------------- */
+.facts { margin: 0 0 1.5em; border-top: 2px solid var(--rule-strong); }
+.facts > div { display: grid; grid-template-columns: minmax(9rem, 14rem) 1fr;
+               gap: 0 1rem; padding: .5rem 0; border-bottom: 1px solid var(--rule); }
+.facts dt { color: var(--navy); font-weight: 600; font-size: .9rem; }
+.facts dd { margin: 0; }
+@media (max-width: 34rem) { .facts > div { grid-template-columns: 1fr; gap: .15rem; } }
 
-h3 {
-  font-size: 1.25em;
-  margin-bottom: 5px;
-    margin-top: 15px;
-  font-family: 'Helvetica Neue';
-}
+/* ---- home -------------------------------------------------------------- */
+.lede { max-width: 34em; font-size: 1.2rem; line-height: 1.5; color: var(--ink); }
+.counts { display: flex; flex-wrap: wrap; gap: 0 2.5rem; margin: 0 0 2em; padding: 0; list-style: none; }
+.counts div { padding: 0; }
+.counts dt { color: var(--muted); font-size: .85rem; }
+.counts dd { margin: 0; font-size: 1.6rem; font-weight: 600; color: var(--navy);
+             font-variant-numeric: tabular-nums; }
 
-h4 {
-  font-size: 1em;
-  font-weight: bold;
-  font-family: 'Helvetica Neue';
-}
+/* A standing caveat, not a decorative callout: it must not look dismissible. */
+.caveat { border-left: 4px solid var(--orange); background: var(--wash);
+          padding: .85rem 1rem; margin: 0 0 1.5em; font-size: .95rem; max-width: var(--measure); }
+.caveat p { margin: 0; }
+.caveat p + p { margin-top: .5em; }
 
-table {
-  margin-bottom: 10px;
-    table-layout: fixed;
-}
+.status { display: inline-block; font-size: .8rem; font-weight: 600; color: var(--navy);
+          border: 1px solid var(--rule-strong); border-radius: 3px; padding: .05rem .4rem; }
 
-table.dataTable thead .sorting:after,
-table.dataTable thead .sorting:before,
-table.dataTable thead .sorting_asc:after,
-table.dataTable thead .sorting_asc:before,
-table.dataTable thead .sorting_asc_disabled:after,
-table.dataTable thead .sorting_asc_disabled:before,
-table.dataTable thead .sorting_desc:after,
-table.dataTable thead .sorting_desc:before,
-table.dataTable thead .sorting_desc_disabled:after,
-table.dataTable thead .sorting_desc_disabled:before {
-  bottom: .5em;
-}
+/* ---- footer ------------------------------------------------------------ */
+.site-foot { border-top: 1px solid var(--rule); background: var(--wash);
+             padding: 1.75rem 0; font-size: .9rem; color: var(--muted); }
+.site-foot a { color: var(--link); }
+.site-foot .cols { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; }
+.site-foot ul { list-style: none; margin: 0; padding: 0; }
+.site-foot li { margin-bottom: .3rem; }
 
-.table-gradient-overlay {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  margin-top: -59px;
-  background: linear-gradient(to top, rgba(255, 255, 255, 1.0), rgba(255, 255, 255, 0.3));
-  pointer-events: none;
-}
+/* ---- utility ----------------------------------------------------------- */
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px;
+                   padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.edit-link { font-size: .85rem; font-weight: 400; }
 
-dd {
-  margin-left: 30px;
-}
-
-a:link,
-a:visited,
-a:hover {
-  color: #3955E7; //#880BC8; // #1756a9; 
-}
-
-.bg-light {
-  background-color: #eeeeee;
-}
-
-.badge {
-  font-weight: 400;
-}
-
-.badge-secondary {
-  color: #fff;
-  background-color: #4C4C4C;
-  border: none;
-  border-radius: 4px;
-}
-
-.btn-pill {
-  border-radius: 23px;
-  margin: 1px;
-}
-
-.card-body {
-  padding: 0px;
-  padding-left: 5px;
-}
-
-.card-text {
-  font-size: 0.8em;
-}
-
-.col-sm-auto {
-  padding-left: 3px;
-  padding-right: 3px;
-}
-
-ul.facet-group {
-  list-style-type: none;
-}
-
-ul.three-column {
-  list-style-type: none;
-  columns: 3;
-  -webkit-columns: 3;
-  -moz-columns: 3;
-  width: fit-content;
-}
-
-a.card-link {
-  text-decoration: none;
-  color: #000000;
-}
-
-a.badge:visited {
-  text-decoration: none;
-  color: #ffffff;
-}
-
-a.btn:visited,
-a.btn:link {
-  text-decoration: none;
-  color: #ffffff;
-}
-
-a.btn-annotation:visited,
-a.btn-annotation:link {
-  background-color: #880BC8;
-  border-color: #880BC8;
-}
-
-a.btn-annotation:hover {
-  background-color: #620492;
-  border-color: white;
-}
-
-// a stuff
-.dropdown-item {
-  width: auto;
-  color: #3955E7;
-}
-
-a.dropdown-item:visited {
-  text-decoration: none;
-  color: #3955E7;
-}
-
-a.logo-link {
-  border: 0;
-  padding: 4px 8px 6px 8px;
-}
-
-a.logo-link img {
-  height: 40px;
-}
-
-a.page-title {
-  text-decoration: none;
-  color: #424242;
-}
-a.page-title:visited {
-  text-decoration: none;
-  color: #424242;
-}
-
-/* SEARCH */
-
-.gsc-control-cse {
-  padding: 0px !important;
-  border-width: 0px !important;
-}
-
-form.gsc-search-box,
-table.gsc-search-box {
-  margin-bottom: 0px !important;
-}
-
-.gsc-search-box {
-  padding: 0px 4px 0px 6px !important;
-}
-
-.gsc-input {
-  padding: 0px 4px 0px 6px !important;
-  border: none;
-}
-
-#gsc-iw-id1,
-#gsc-iw-id2 {
-  background-color: #ffffff !important;
-  height: auto !important;
-  padding: 0px !important;
-  border-width: 0px !important;
-  box-shadow: none !important;
-}
-
-#gs_tti50,
-#gs_tti51 {
-  padding: 0px !important;
-}
-
-#gsc-i-id1,
-#gsc-i-id2 {
-  height: 33px !important;
-  padding: 0px !important;
-  background: none !important;
-  text-indent: 0px !important;
-}
-
-.gsib_b {
-  display: none;
-}
-
-.gsc-search-button {
-  border: none;
-}
-
-button.gsc-search-button {
-  display: block;
-  width: 3px !important;
-  height: 3px !important;
-  border-width: 0px !important;
-  margin: -10px 0px 0px -14px !important;
-  padding: 4px 14px 14px 4px !important;
-  outline: none;
-    cursor: pointer;
-    box-shadow: none !important;
-    box-sizing: content-box !important;
-}
-
-.gsc-branding {
-  display: none !important;
-}
-
-.gsc-control-cse {
-  background-color: transparent !important;
-}
-
-.gsc-results-wrapper-overlay {
-  text-align: left;
-}
-
-/* FOOTER */
-.site-footer {
-  padding: 5px 0;
-  background-color: #EEEEEE;
-}
-
-/* THANKS */
-.thanks-wrapper {
-  @include relative-font-size(0.9375);
-  margin-left: -$spacing-unit / 2;
-  @extend %clearfix;
-}
-
-.thanks-wrapper img {
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
-  margin: 5px;
-}
-
-.optional-notes {
-  font-size: 0.8em;
-  background-color: #e1ddff;
-  // border: 1px solid #cccccc;
-  margin-top: 100px;
-  padding: 10px;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }

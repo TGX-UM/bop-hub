@@ -1,0 +1,40 @@
+name: Propose an event
+description: Add a single measurable biological change, without a whole pathway around it.
+title: "Event: "
+labels: ["event proposal"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Event
+      description: Written as a direction and a thing, the way AOP-Wiki does it.
+      placeholder: "Increase, hepatic glutathione"
+    validations:
+      required: true
+  - type: dropdown
+    id: level
+    attributes:
+      label: Level of biological organisation
+      options: [molecular, cellular, tissue, organ, individual, population]
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happens
+      description: A couple of sentences. What changes, where, and how it would be measured.
+    validations:
+      required: true
+  - type: input
+    id: aopwiki
+    attributes:
+      label: Does this event already exist in AOP-Wiki?
+      description: "Search https://aopwiki.org/events first. Give the key event number if you find it, and say whether it runs in the same direction or the opposite one."
+      placeholder: "KE 1312, same direction"
+  - type: textarea
+    id: refs
+    attributes:
+      label: References
+      description: DOIs or PMIDs.
+    validations:
+      required: true

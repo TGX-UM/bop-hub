@@ -1,26 +1,14 @@
-<header class="site-header" role="banner">
-  <div class="wrapper">
-    <!-- NAV BAR -->
-    <nav class="navbar navbar-light">
-      <a class="navbar-brand" href="{{ "/" | relative_url }}">
-        <img src="{{ "/assets/img/jiffy_logo.png" | relative_url }}" height="45" class="d-inline-block align-top" alt="Jiffy logo"> {{ site.title }}
-      </a>
-      <div>
-
-        <!-- MENU -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
-      <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
-        <div class="nav justify-content-center">
-          <a class="nav-item nav-link" href="{{ "/about.html" | relative_url }}">About</a>
-          <a class="nav-item nav-link" href="{{ "/browse/annotations.html" | relative_url }}">Browse</a>
-          <a class="nav-item nav-link" href="{{ "/help.html" | relative_url }}">Help</a>
-          <a class="nav-item nav-link" href="{{ "/stats.html" | relative_url }}">Stats</a>
-        </div>
-      </div>
-      </nav>
-      </div>
-      </header>
+<header class="site-head">
+  <div class="wrap">
+    <a class="site-name" href="{{ '/' | relative_url }}">BOP-Hub</a>
+    <span class="site-tag">{{ site.tagline }}</span>
+    <nav class="site-nav" aria-label="Main">
+      <a href="{{ '/browse/bops/' | relative_url }}"{% if page.url contains '/browse/bops' %} aria-current="page"{% endif %}>Pathways</a>
+      <a href="{{ '/browse/events/' | relative_url }}"{% if page.url contains '/browse/events' %} aria-current="page"{% endif %}>Events</a>
+      <a href="{{ '/browse/relationships/' | relative_url }}"{% if page.url contains '/browse/relationships' %} aria-current="page"{% endif %}>Relationships</a>
+      <a href="{{ '/browse/annotations/' | relative_url }}"{% if page.url contains '/browse/annotations' %} aria-current="page"{% endif %}>Terms</a>
+      <a href="{{ '/about/' | relative_url }}"{% if page.url contains '/about' %} aria-current="page"{% endif %}>About</a>
+      <a href="{{ '/contribute/' | relative_url }}"{% if page.url contains '/contribute' %} aria-current="page"{% endif %}>Contribute</a>
+    </nav>
+  </div>
+</header>

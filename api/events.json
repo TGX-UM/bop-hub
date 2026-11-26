@@ -1,0 +1,49 @@
+---
+layout: null
+permalink: /api/events.json
+---
+{%- assign empty = "" | split: "," -%}
+{
+  "@context": "{{ '/assets/context.jsonld' | absolute_url }}",
+  "generated": "{{ site.time | date_to_xmlschema }}",
+  "canonical_base": {{ site.canonical_base | jsonify }},
+  "license": "CC0-1.0",
+  "events": [
+  {%- for ev in site.events %}
+    {
+      "identifier": {{ ev.identifier | jsonify }},
+      "iri": {{ ev.url | prepend: site.canonical_base | jsonify }},
+      "url": {{ ev.url | absolute_url | jsonify }},
+      "title": {{ ev.title | jsonify }},
+      "description": {{ ev.description | strip_newlines | jsonify }},
+      "biological_level": {{ ev.biological_level | jsonify }},
+      "process": {{ ev.process | jsonify }},
+      "object": {{ ev.object | jsonify }},
+      "action": {{ ev.action | jsonify }},
+      "aopwiki_ke": {{ ev.aopwiki_ke | jsonify }},
+      "aopwiki_mirror_ke": {{ ev.aopwiki_mirror_ke | jsonify }},
+      "wikipathways": {{ ev.wikipathways | default: empty | jsonify }},
+      "taxa": {{ ev.taxa | default: empty | jsonify }},
+      "status": {{ ev.status | jsonify }},
+      "modified": {{ ev.modified | jsonify }}
+    }{% unless forloop.last %},{% endunless %}
+  {%- endfor %}
+  ],
+  "relationships": [
+  {%- for r in site.relationships %}
+    {
+      "identifier": {{ r.identifier | jsonify }},
+      "iri": {{ r.url | prepend: site.canonical_base | jsonify }},
+      "url": {{ r.url | absolute_url | jsonify }},
+      "title": {{ r.title | jsonify }},
+      "upstream_event": {{ r.upstream_event | jsonify }},
+      "downstream_event": {{ r.downstream_event | jsonify }},
+      "adjacency": {{ r.adjacency | jsonify }},
+      "evidence": {{ r.evidence | jsonify }},
+      "aopwiki_ker": {{ r.aopwiki_ker | jsonify }},
+      "status": {{ r.status | jsonify }},
+      "modified": {{ r.modified | jsonify }}
+    }{% unless forloop.last %},{% endunless %}
+  {%- endfor %}
+  ]
+}

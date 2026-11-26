@@ -1,0 +1,159 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "aopo": "http://aopkb.org/aop_ontology#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "dc": "http://purl.org/dc/elements/1.1/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "nci": "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#",
+    "pav": "http://purl.org/pav/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "bop": "https://w3id.org/bop-hub/",
+    "GO": "http://purl.obolibrary.org/obo/GO_",
+    "CHEBI": "http://purl.obolibrary.org/obo/CHEBI_",
+    "CL": "http://purl.obolibrary.org/obo/CL_",
+    "UBERON": "http://purl.obolibrary.org/obo/UBERON_",
+    "PATO": "http://purl.obolibrary.org/obo/PATO_",
+    "MONDO": "http://purl.obolibrary.org/obo/MONDO_",
+    "DOID": "http://purl.obolibrary.org/obo/DOID_",
+    "HP": "http://purl.obolibrary.org/obo/HP_",
+    "NCBITaxon": "http://purl.obolibrary.org/obo/NCBITaxon_",
+    "HsapDv": "http://purl.obolibrary.org/obo/HsapDv_",
+    "FOODON": "http://purl.obolibrary.org/obo/FOODON_",
+    "MESH": "http://id.nlm.nih.gov/mesh/",
+    "UniProt": "http://purl.uniprot.org/uniprot/",
+    "Reactome": "https://reactome.org/content/detail/",
+    "WP": "https://identifiers.org/wikipathways:",
+    "aop": "https://identifiers.org/aop/",
+    "aop.events": "https://identifiers.org/aop.events/",
+    "aop.relationships": "https://identifiers.org/aop.relationships/",
+    "iri": "@id",
+    "identifier": {
+      "@id": "dcterms:identifier"
+    },
+    "title": {
+      "@id": "dcterms:title"
+    },
+    "description": {
+      "@id": "dcterms:description"
+    },
+    "label": {
+      "@id": "rdfs:label"
+    },
+    "definition": {
+      "@id": "skos:definition"
+    },
+    "synonyms": {
+      "@id": "skos:altLabel",
+      "@container": "@set"
+    },
+    "modified": {
+      "@id": "dcterms:modified",
+      "@type": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    "created": {
+      "@id": "dcterms:created",
+      "@type": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    "license": {
+      "@id": "dcterms:license"
+    },
+    "references": {
+      "@id": "dcterms:references",
+      "@container": "@set"
+    },
+    "curators": {
+      "@id": "pav:curatedBy",
+      "@container": "@set"
+    },
+    "orcid": {
+      "@id": "@id"
+    },
+    "name": {
+      "@id": "foaf:name"
+    },
+    "_comment_mapping": "Where a BOP concept has an AOP-ontology counterpart it reuses that term, because the two frameworks share a grammar and should be queryable together. The event/relationship structure maps onto aopo directly; no term is minted for the beneficial direction, which is carried by the PATO action on the event instead.",
+    "events": {
+      "@id": "aopo:has_key_event",
+      "@container": "@set"
+    },
+    "relationships": {
+      "@id": "aopo:has_key_event_relationship",
+      "@container": "@set"
+    },
+    "event": {
+      "@id": "aopo:has_key_event",
+      "@type": "@id"
+    },
+    "relationship": {
+      "@id": "aopo:has_key_event_relationship",
+      "@type": "@id"
+    },
+    "upstream_event": {
+      "@id": "aopo:has_upstream_key_event",
+      "@type": "@id"
+    },
+    "downstream_event": {
+      "@id": "aopo:has_downstream_key_event",
+      "@type": "@id"
+    },
+    "biological_level": {
+      "@id": "nci:C25664"
+    },
+    "process": {
+      "@id": "aopo:has_process",
+      "@type": "@id"
+    },
+    "object": {
+      "@id": "aopo:has_object",
+      "@type": "@id"
+    },
+    "action": {
+      "@id": "aopo:has_action",
+      "@type": "@id"
+    },
+    "taxa": {
+      "@id": "aopo:TaxonomicApplicability",
+      "@container": "@set"
+    },
+    "sex": {
+      "@container": "@set"
+    },
+    "life_stage": {
+      "@container": "@set"
+    },
+    "diseases": {
+      "@container": "@set"
+    },
+    "phenotypes": {
+      "@container": "@set"
+    },
+    "interventions": {
+      "@container": "@set"
+    },
+    "aopwiki_ke": {
+      "@id": "skos:exactMatch",
+      "@type": "@id"
+    },
+    "aopwiki_mirror_ke": {
+      "@id": "skos:related",
+      "@type": "@id"
+    },
+    "aopwiki_ker": {
+      "@id": "skos:exactMatch",
+      "@type": "@id"
+    },
+    "wikipathways": {
+      "@id": "skos:related",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "related_aops": {
+      "@container": "@set"
+    },
+    "bops": {
+      "@container": "@set"
+    }
+  }
+}

@@ -1,26 +1,52 @@
 ---
 layout: default
 ---
-<a class="btn btn-sm btn-pill btn-annotation" style="float: right;" href="{{ "/browse/annotations.html" | relative_url }}">Annotations</a>
-<a class="page-title" href="{{site.url}}{{page.url}}"></a>
-<h2 id="name">{{ page.title }}
-  <a href="https://github.com/{{site.github_username}}/{{site.github_repo}}/edit/main/{{ page.path }}" target="_blank">
-    <span title="Edit title and description" style="color: #666; font-size: 0.6em; vertical-align: super;">
-      <i class="fa fa-pencil"></i>
-    </span>
-  </a>
-</h2>
-</a>
-<p>{{ page.description }}</p>
-<hr />
-<br />
-<ul>
-  {% for ent in site.entries %}
-  {% assign annot-values = ent.annotations %}
-  {% if annot-values contains page.title %}
-  <li><a href="{{ ent.url | relative_url }}">{{ ent.title }}</a></li>
-  {% endif %}
-  {% endfor %}
-</ul>
+<h1>{{ page.label }}</h1>
+<p class="ident">{{ page.identifier }} · {{ page.ontology }}</p>
 
+{%- if page.definition %}<p class="lede">{{ page.definition }}</p>{% endif %}
+
+<dl class="facts">
+  <div><dt>Ontology</dt><dd>{{ page.ontology }}</dd></div>
+  <div><dt>Term IRI</dt><dd><a href="{{ page.iri }}" class="mono">{{ page.iri }}</a></dd></div>
+  <div><dt>Used in slots</dt><dd>{{ page.slot | join: ", " }}</dd></div>
+  {%- if page.synonyms and page.synonyms.size > 0 %}
+  <div><dt>Also known as</dt><dd>{{ page.synonyms | join: ", " }}</dd></div>
+  {%- endif %}
+</dl>
+
+{%- comment -%}
+  Reverse lookup across every slot this term may occupy.
+
+  `concat` is used only on the collections themselves, which always exist. It is
+  deliberately NOT used to merge a document's slot values: a slot absent from a
+  page is nil, and `concat` on a nil operand aborts the whole build with
+  "concat filter requires an array argument", pointing at the layout rather than
+  at the page that is missing the key. Testing each slot separately cannot fail
+  that way.
+{%- endcomment -%}
+<h2>Pathways and events annotated with this term</h2>
+{%- assign hits = 0 -%}
+{%- assign candidates = site.bops | concat: site.events | concat: site.relationships -%}
+<ul class="prose">
+{%- for item in candidates -%}
+  {%- assign matched = false -%}
+  {%- for slot in site.annotation_slots -%}
+    {%- assign values = item[slot] -%}
+    {%- if values and values contains page.identifier -%}{%- assign matched = true -%}{%- endif -%}
+  {%- endfor -%}
+  {%- if matched -%}
+    {%- assign hits = hits | plus: 1 -%}
+    <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      <span class="ident">{{ item.identifier }}</span></li>
+  {%- endif -%}
+{%- endfor -%}
+</ul>
+{%- if hits == 0 %}
+<p class="prose">Nothing is annotated with this term yet.</p>
+{%- endif %}
+
+<div class="prose">
 {{ content }}
+</div>
+<p>{% include edit-link.html path=page.path %}</p>

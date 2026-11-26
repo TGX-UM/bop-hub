@@ -1,5 +1,5 @@
 ---
-id: "BOP:1"
+identifier: "BOP:1"
 title: "Energy deficit from fasting leading to resolution of metabolic dysfunction-associated steatotic liver disease"
 short_title: "Fasting → resolution of MASLD"
 description: >-

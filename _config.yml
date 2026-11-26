@@ -52,7 +52,8 @@ mermaid_version: "11.4.1"
 
 # --- build -----------------------------------------------------------------
 markdown: kramdown
-theme: minima
+# No theme gem: the stylesheet is self-contained so the UM house style is not
+# fighting a theme's own base rules.
 plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
@@ -74,24 +75,25 @@ exclude:
   - CONTRIBUTING.md
   - CODE_OF_CONDUCT.md
   - NOTICE
+  - LICENSE
+  - LICENSE-CONTENT
+  - CITATION.cff
+  - .ruby-version
 
 # --- collections -----------------------------------------------------------
 collections:
   bops:
     output: true
-    permalink: /bops/:name/
+    permalink: /bops/:path/
   events:
     output: true
-    permalink: /events/:name/
+    permalink: /events/:path/
   relationships:
     output: true
-    permalink: /relationships/:name/
+    permalink: /relationships/:path/
   annotations:
     output: true
-    permalink: /annotations/:name/
-  browse:
-    output: true
-    permalink: /browse/:name/
+    permalink: /annotations/:path/
 
 # `type:` must be the PLURAL collection key. A typo here silently yields
 # unstyled pages with no error.
@@ -104,7 +106,5 @@ defaults:
     values: {layout: "relationship-page"}
   - scope: {path: "", type: "annotations"}
     values: {layout: "annotation-page"}
-  - scope: {path: "", type: "browse"}
-    values: {layout: "default"}
   - scope: {path: ""}
     values: {layout: "default", sitemap: false}

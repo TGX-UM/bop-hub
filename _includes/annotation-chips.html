@@ -1,0 +1,21 @@
+{%- comment -%}
+  Render the ontology terms in one applicability slot as chips, linking to the
+  term page where one exists. A term with no page renders dashed, so the gap is
+  visible rather than silent.
+  Usage: {% include annotation-chips.html terms=page.taxa name="Taxonomic applicability" %}
+{%- endcomment -%}
+{%- if include.terms and include.terms.size > 0 -%}
+<div class="slot">
+  <p class="slot-name">{{ include.name }}</p>
+  <ul class="chips">
+    {%- for curie in include.terms -%}
+      {%- assign term = site.annotations | where: "identifier", curie | first -%}
+      {%- if term -%}
+        <li><a class="chip" href="{{ term.url | relative_url }}">{{ term.label }}<span class="ident">{{ curie }}</span></a></li>
+      {%- else -%}
+        <li><span class="chip chip-dead" title="No term page in this repository yet">{{ curie }}</span></li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+</div>
+{%- endif -%}

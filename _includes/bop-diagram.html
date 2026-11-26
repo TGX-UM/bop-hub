@@ -1,0 +1,51 @@
+{%- comment -%}
+  Build the Mermaid flowchart for a BOP from the SAME relationships list the
+  evidence table reads, so the picture and the table can never disagree.
+
+  Mermaid runs with securityLevel "strict", which disables click handlers, so
+  nodes are not links. Navigation lives in the event-chain table below, which
+  also serves as the text equivalent -- Mermaid's SVG output is not usefully
+  screen-readable, so that table is rendered always, not as a <noscript>.
+
+  Set `diagram_engine: table` in _config.yml to switch the whole thing off.
+{%- endcomment -%}
+{%- if site.diagram_engine == "mermaid" and page.relationships and page.relationships.size > 0 -%}
+<figure class="diagram">
+<pre class="mermaid">
+flowchart TB
+{%- for item in page.events -%}
+  {%- assign ev = site.events | where: "identifier", item.event | first -%}
+  {%- assign nid = item.event | replace: ":", "_" -%}
+  {%- assign raw = ev.title | default: item.event -%}
+  {%- assign lbl = raw | replace: '"', "" | replace: "[", "(" | replace: "]", ")" | replace: "{", "(" | replace: "}", ")" -%}
+  {%- if item.role == "initiating" %}
+  {{ nid }}(["{{ lbl }}"]):::initiating
+  {%- elsif item.role == "outcome" %}
+  {{ nid }}[["{{ lbl }}"]]:::outcome
+  {%- else %}
+  {{ nid }}["{{ lbl }}"]:::key
+  {%- endif -%}
+{%- endfor -%}
+{%- for item in page.relationships -%}
+  {%- assign ker = site.relationships | where: "identifier", item.ker | first -%}
+  {%- if ker and ker.upstream_event and ker.downstream_event -%}
+    {%- assign u = ker.upstream_event | replace: ":", "_" -%}
+    {%- assign d = ker.downstream_event | replace: ":", "_" -%}
+    {%- if ker.adjacency == "non-adjacent" %}
+  {{ u }} -.-> {{ d }}
+    {%- else %}
+  {{ u }} --> {{ d }}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor %}
+  classDef initiating fill:#fdece5,stroke:#e84e10,stroke-width:2px,color:#001c3d;
+  classDef key fill:#ffffff,stroke:#c9ced6,stroke-width:1px,color:#001c3d;
+  classDef outcome fill:#e4f4fb,stroke:#00a2db,stroke-width:2px,color:#001c3d;
+</pre>
+<figcaption>
+  Solid arrows join adjacent events; dashed arrows span intervening ones.
+  Rounded and orange marks the initiating event, square and blue the beneficial
+  outcome. The table below lists the same pathway as text, with links.
+</figcaption>
+</figure>
+{%- endif -%}

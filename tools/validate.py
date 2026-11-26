@@ -197,24 +197,24 @@ def check_schema(docs, schemas, report, validator_cls):
 def check_filenames(docs, report):
     for directory, (_, sep) in COLLECTIONS.items():
         for rel, data in docs[directory].items():
-            ident = data.get("id")
+            ident = data.get("identifier")
             if not isinstance(ident, str):
                 continue
             expected = ident.replace(":", sep)
             actual = pathlib.Path(rel).stem
             if actual != expected:
-                report.error(str(rel), f"filename must match id: expected {expected}.md for id {ident!r}")
+                report.error(str(rel), f"filename must match identifier: expected {expected}.md for {ident!r}")
 
 
 def check_duplicate_ids(docs, report):
     seen: dict[str, str] = {}
     for entries in docs.values():
         for rel, data in entries.items():
-            ident = data.get("id")
+            ident = data.get("identifier")
             if not isinstance(ident, str):
                 continue
             if ident in seen:
-                report.error(str(rel), f"duplicate id {ident!r}, already used by {seen[ident]}")
+                report.error(str(rel), f"duplicate identifier {ident!r}, already used by {seen[ident]}")
             else:
                 seen[ident] = str(rel)
     return seen
@@ -246,8 +246,8 @@ def check_dates(docs, report):
 
 
 def check_references_resolve(docs, report):
-    events = {d["id"]: rel for rel, d in docs["_events"].items() if isinstance(d.get("id"), str)}
-    kers = {d["id"]: (rel, d) for rel, d in docs["_relationships"].items() if isinstance(d.get("id"), str)}
+    events = {d["identifier"]: rel for rel, d in docs["_events"].items() if isinstance(d.get("identifier"), str)}
+    kers = {d["identifier"]: (rel, d) for rel, d in docs["_relationships"].items() if isinstance(d.get("identifier"), str)}
 
     # relationships point at real events, and not at themselves
     for rel, data in docs["_relationships"].items():
@@ -300,7 +300,7 @@ def check_references_resolve(docs, report):
 def check_curies(docs, config, vocab, report):
     slots = config.get("annotation_slots") or []
     prefixes = set(vocab.get("curie_prefixes") or [])
-    annotations = {d["id"]: d for d in docs["_annotations"].values() if isinstance(d.get("id"), str)}
+    annotations = {d["identifier"]: d for d in docs["_annotations"].values() if isinstance(d.get("identifier"), str)}
 
     # annotation pages declare slots that actually exist
     for rel, data in docs["_annotations"].items():
@@ -341,10 +341,10 @@ def check_orphans(docs, report):
                 used_kers.add(item["ker"])
 
     for rel, data in docs["_events"].items():
-        if isinstance(data.get("id"), str) and data["id"] not in used_events:
+        if isinstance(data.get("identifier"), str) and data["identifier"] not in used_events:
             report.warn(str(rel), f"{data['id']} is not used by any BOP")
     for rel, data in docs["_relationships"].items():
-        if isinstance(data.get("id"), str) and data["id"] not in used_kers:
+        if isinstance(data.get("identifier"), str) and data["identifier"] not in used_kers:
             report.warn(str(rel), f"{data['id']} is not used by any BOP")
 
 
@@ -360,7 +360,7 @@ def check_reuse_hints(docs, report):
 
 def check_graph(docs, report):
     """Within a BOP, the edges must form a DAG and reach the outcome."""
-    kers = {d["id"]: d for d in docs["_relationships"].values() if isinstance(d.get("id"), str)}
+    kers = {d["identifier"]: d for d in docs["_relationships"].values() if isinstance(d.get("identifier"), str)}
     for rel, data in docs["_bops"].items():
         edges = []
         for item in data.get("relationships") or []:

@@ -1,0 +1,13 @@
+{%- comment -%}
+  Render one evidence grade as three bars plus its word. Colour is deliberately
+  not used: see the note at the top of assets/main.scss.
+  Usage: {% include evidence.html grade=rel.evidence.empirical_support %}
+{%- endcomment -%}
+{%- assign g = include.grade | default: "not-specified" -%}
+{%- case g -%}
+  {%- when "high"     -%}{%- assign bars = "▰▰▰" -%}
+  {%- when "moderate" -%}{%- assign bars = "▰▰▱" -%}
+  {%- when "low"      -%}{%- assign bars = "▰▱▱" -%}
+  {%- else            -%}{%- assign bars = "▱▱▱" -%}
+{%- endcase -%}
+<span class="ev"><span class="ev-bars" aria-hidden="true">{{ bars }}</span><span class="ev-word">{{ g }}</span></span>

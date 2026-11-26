@@ -1,0 +1,40 @@
+{%- comment -%}
+  The text equivalent of the diagram and the navigation into the event pages.
+  Rendered always: Mermaid's SVG is not usefully screen-readable, and there is
+  no diagram at all with JavaScript off, in print, or for a crawler.
+{%- endcomment -%}
+<div class="table-scroll">
+<table>
+  <caption>The {{ page.events | size }} events of this pathway. Role is the part each plays here; the same event may play another part in another pathway.</caption>
+  <thead>
+    <tr><th scope="col">Role</th><th scope="col">Event</th><th scope="col">Level</th><th scope="col">Leads to</th></tr>
+  </thead>
+  <tbody>
+  {%- for item in page.events -%}
+    {%- assign ev = site.events | where: "identifier", item.event | first -%}
+    <tr class="ev-row is-{{ item.role }}">
+      <td><span class="role role-{{ item.role }}">{{ item.role }}</span></td>
+      <td>
+        {%- if ev -%}
+          <a href="{{ ev.url | relative_url }}">{{ ev.title }}</a>
+        {%- else -%}
+          {{ item.event }} <em>(no page)</em>
+        {%- endif -%}
+        <br><span class="ident">{{ item.event }}</span>
+      </td>
+      <td>{{ ev.biological_level | default: "—" }}</td>
+      <td>
+        {%- assign outgoing = "" | split: "," -%}
+        {%- for r in page.relationships -%}
+          {%- assign ker = site.relationships | where: "identifier", r.ker | first -%}
+          {%- if ker and ker.upstream_event == item.event -%}
+            {%- assign target = site.events | where: "identifier", ker.downstream_event | first -%}
+            <a href="{{ ker.url | relative_url }}" title="{{ ker.title }}">{{ target.title | default: ker.downstream_event }}</a>{% unless forloop.last %}<br>{% endunless %}
+          {%- endif -%}
+        {%- endfor -%}
+      </td>
+    </tr>
+  {%- endfor -%}
+  </tbody>
+</table>
+</div>

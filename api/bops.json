@@ -1,0 +1,51 @@
+---
+layout: null
+permalink: /api/bops.json
+---
+{%- assign empty = "" | split: "," -%}
+{
+  "@context": "{{ '/assets/context.jsonld' | absolute_url }}",
+  "generated": "{{ site.time | date_to_xmlschema }}",
+  "canonical_base": {{ site.canonical_base | jsonify }},
+  "license": "CC0-1.0",
+  "bops": [
+  {%- for bop in site.bops %}
+    {
+      "identifier": {{ bop.identifier | jsonify }},
+      "iri": {{ bop.url | prepend: site.canonical_base | jsonify }},
+      "url": {{ bop.url | absolute_url | jsonify }},
+      "title": {{ bop.title | jsonify }},
+      "description": {{ bop.description | strip_newlines | jsonify }},
+      "status": {{ bop.status | jsonify }},
+      "overall_confidence": {{ bop.overall_confidence | jsonify }},
+      "events": [
+        {%- for item in bop.events %}
+        {"event": {{ item.event | jsonify }}, "role": {{ item.role | jsonify }}}{% unless forloop.last %},{% endunless %}
+        {%- endfor %}
+      ],
+      "relationships": [
+        {%- for item in bop.relationships %}
+        {%- assign ker = site.relationships | where: "identifier", item.ker | first %}
+        {
+          "relationship": {{ item.ker | jsonify }},
+          "upstream_event": {{ ker.upstream_event | jsonify }},
+          "downstream_event": {{ ker.downstream_event | jsonify }},
+          "adjacency": {{ ker.adjacency | jsonify }},
+          "essentiality": {{ item.essentiality | jsonify }},
+          "confidence": {{ item.confidence | jsonify }}
+        }{% unless forloop.last %},{% endunless %}
+        {%- endfor %}
+      ],
+      "interventions": {{ bop.interventions | default: empty | jsonify }},
+      "taxa": {{ bop.taxa | default: empty | jsonify }},
+      "sex": {{ bop.sex | default: empty | jsonify }},
+      "life_stage": {{ bop.life_stage | default: empty | jsonify }},
+      "diseases": {{ bop.diseases | default: empty | jsonify }},
+      "phenotypes": {{ bop.phenotypes | default: empty | jsonify }},
+      "related_aops": {{ bop.related_aops | default: empty | jsonify }},
+      "references": {{ bop.references | default: empty | jsonify }},
+      "modified": {{ bop.modified | jsonify }}
+    }{% unless forloop.last %},{% endunless %}
+  {%- endfor %}
+  ]
+}

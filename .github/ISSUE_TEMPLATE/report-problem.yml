@@ -1,0 +1,20 @@
+name: Report a problem
+description: Something is wrong — an evidence grade, a fact, a broken link, a bug on the site.
+title: "Problem: "
+labels: ["correction"]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: The page URL, or the identifier of the pathway, event or relationship.
+      placeholder: "https://tgx-um.github.io/bop-hub/relationships/BOPR-0012/"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What is wrong
+      description: For an evidence grade or a factual claim, say what it should be and cite what shows that.
+    validations:
+      required: true

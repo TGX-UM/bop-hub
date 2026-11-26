@@ -1,0 +1,109 @@
+---
+layout: default
+---
+<h1>{{ page.title }}</h1>
+
+<p class="ident">{{ page.identifier }} · <span class="status">{{ page.status }}</span>
+  · overall confidence {{ page.overall_confidence | default: "not-specified" }}</p>
+
+<p class="lede">{{ page.description }}</p>
+
+<div class="caveat">
+  <p><strong>This is a mechanistic map, not medical advice.</strong> A beneficial
+  outcome pathway describes how an intervention can plausibly lead to a health
+  benefit in some people. It is not a treatment recommendation, not a health-claim
+  authorisation, and not a substitute for regulatory assessment.</p>
+</div>
+
+<h2>Pathway</h2>
+{% include bop-diagram.html %}
+{% include event-chain-table.html %}
+
+<h2>Weight of evidence</h2>
+{% include evidence-table.html %}
+
+<h2>Applicability domain</h2>
+<p class="prose">The context in which this pathway is held to apply. A pathway built
+on one population does not automatically transfer to another.</p>
+{% include annotation-chips.html terms=page.interventions name="Interventions" %}
+{% include annotation-chips.html terms=page.diseases      name="Disease context" %}
+{% include annotation-chips.html terms=page.phenotypes    name="Phenotypes" %}
+{% include annotation-chips.html terms=page.taxa          name="Taxonomic applicability" %}
+{% include annotation-chips.html terms=page.sex           name="Sex" %}
+{% include annotation-chips.html terms=page.life_stage    name="Life stage" %}
+
+{%- if page.modulating_factors and page.modulating_factors.size > 0 %}
+<h3>Modulating factors</h3>
+<div class="table-scroll">
+<table>
+  <thead><tr><th scope="col">Factor</th><th scope="col">Effect</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+  {%- for m in page.modulating_factors %}
+    <tr><td>{{ m.factor }}</td><td>{{ m.direction }}</td><td>{{ m.comment }}</td></tr>
+  {%- endfor %}
+  </tbody>
+</table>
+</div>
+{%- endif %}
+
+{%- if page.related_aops and page.related_aops.size > 0 %}
+<h2>Adverse outcome pathways this touches</h2>
+<p class="prose">Links into <a href="https://aopwiki.org/">AOP-Wiki</a>. Reading a
+beneficial pathway against the adverse ones it meets is the point of recording
+both in the same grammar.</p>
+<div class="table-scroll">
+<table>
+  <thead><tr><th scope="col">AOP</th><th scope="col">Relation</th><th scope="col">Title</th></tr></thead>
+  <tbody>
+  {%- for a in page.related_aops %}
+    {%- assign num = a.aop | remove: "aop:" %}
+    <tr>
+      <td><a href="https://aopwiki.org/aops/{{ num }}">AOP {{ num }}</a></td>
+      <td>{{ a.relation }}</td>
+      <td>{{ a.note }}</td>
+    </tr>
+  {%- endfor %}
+  </tbody>
+</table>
+</div>
+{%- endif %}
+
+<div class="prose">
+{{ content }}
+</div>
+
+<h2>References</h2>
+{% include references.html refs=page.references %}
+
+<h2>Provenance</h2>
+<dl class="facts">
+  <div><dt>Identifier</dt><dd><span class="mono">{{ page.identifier }}</span></dd></div>
+  <div><dt>Canonical IRI</dt><dd><span class="mono">{{ page.url | prepend: site.canonical_base }}</span></dd></div>
+  <div><dt>Curated by</dt><dd>
+    {%- for c in page.curators -%}
+      {{ c.name }}{% if c.orcid %} (<a href="https://orcid.org/{{ c.orcid }}">ORCID {{ c.orcid }}</a>){% endif %}{% unless forloop.last %}, {% endunless %}
+    {%- endfor -%}
+  </dd></div>
+  <div><dt>Created</dt><dd>{{ page.created }}</dd></div>
+  <div><dt>Last modified</dt><dd>{{ page.modified }}</dd></div>
+  <div><dt>Licence</dt><dd>{{ page.license | default: "CC0-1.0" }}</dd></div>
+</dl>
+
+<p>{% include edit-link.html path=page.path %}</p>
+
+{%- if site.diagram_engine == "mermaid" and page.relationships %}
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@{{ site.mermaid_version }}/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({
+    startOnLoad: true,
+    securityLevel: "strict",
+    theme: "base",
+    themeVariables: { fontFamily: '"Open Sans", system-ui, sans-serif', fontSize: "14px" },
+    // Top-to-bottom, not left-to-right: a pathway is long and narrow, so LR
+    // either overflows the page or shrinks the labels to nothing. TB fits the
+    // container and reads in the same order as the table beneath it.
+    flowchart: { curve: "basis", nodeSpacing: 26, rankSpacing: 46,
+                 useMaxWidth: true, wrappingWidth: 200, padding: 8 }
+  });
+</script>
+{%- endif %}

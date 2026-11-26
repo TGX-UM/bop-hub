@@ -1,0 +1,32 @@
+{%- comment -%}
+  Turn a CURIE into a URL that actually resolves.
+
+  identifiers.org is not a universal resolver: it has no namespace for PATO or
+  HsapDv, and its UniProt namespace is lowercase. OBO-library terms resolve
+  through purl.obolibrary.org, and the rest get their own host. Anything
+  unrecognised falls through to identifiers.org, which is the right guess for a
+  prefix we have not met.
+
+  Usage: {% include curie-link.html curie=page.process %}
+{%- endcomment -%}
+{%- assign c = include.curie -%}
+{%- if c and c != "" -%}
+  {%- assign parts = c | split: ":" -%}
+  {%- assign prefix = parts[0] -%}
+  {%- assign local = parts[1] -%}
+  {%- assign obo = "GO,CHEBI,CL,UBERON,PATO,MONDO,DOID,HP,NCBITaxon,HsapDv,FOODON" | split: "," -%}
+  {%- if obo contains prefix -%}
+    {%- assign href = "http://purl.obolibrary.org/obo/" | append: prefix | append: "_" | append: local -%}
+  {%- elsif prefix == "UniProt" -%}
+    {%- assign href = "https://www.uniprot.org/uniprotkb/" | append: local -%}
+  {%- elsif prefix == "MESH" -%}
+    {%- assign href = "https://id.nlm.nih.gov/mesh/" | append: local -%}
+  {%- elsif prefix == "Reactome" -%}
+    {%- assign href = "https://reactome.org/content/detail/" | append: local -%}
+  {%- elsif prefix == "WP" -%}
+    {%- assign href = "https://www.wikipathways.org/pathways/" | append: c | append: ".html" -%}
+  {%- else -%}
+    {%- assign href = "https://identifiers.org/" | append: c -%}
+  {%- endif -%}
+<a href="{{ href }}" class="mono">{{ c }}</a>
+{%- endif -%}

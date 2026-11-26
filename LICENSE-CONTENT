@@ -1,0 +1,24 @@
+Curated content in this repository -- the files under _bops/, _events/,
+_relationships/ and _annotations/, and the data served from api/ -- is released
+under the Creative Commons CC0 1.0 Universal Public Domain Dedication.
+
+    https://creativecommons.org/publicdomain/zero/1.0/
+
+To the extent possible under law, the contributors have waived all copyright and
+related or neighbouring rights to this content. You may copy, modify and reuse
+it for any purpose, including commercially, without permission or attribution.
+
+CC0 is chosen rather than a share-alike or attribution licence because a
+knowledge base of curated facts is most useful when nothing stands in the way of
+reuse, and because it matches the choice made by WikiPathways. Citing BOP-Hub
+is appreciated and helps the project, but it is not a condition of use: see
+CITATION.cff.
+
+Note that AOP-Wiki content, which this repository links to and quotes
+identifiers from, is licensed CC BY-SA 4.0. Identifiers and factual
+cross-references are not themselves copyrightable, but copying substantial
+descriptive text from AOP-Wiki into this repository would carry that licence
+with it. Write your own descriptions.
+
+The site code -- layouts, includes, stylesheets, scripts and the tools in
+tools/ -- is under the MIT licence instead. See LICENSE and NOTICE.

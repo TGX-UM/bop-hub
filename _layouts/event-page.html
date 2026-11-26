@@ -1,0 +1,124 @@
+---
+layout: default
+---
+<h1>{{ page.title }}</h1>
+<p class="ident">{{ page.identifier }} · <span class="status">{{ page.status }}</span>
+  · {{ page.biological_level }} level</p>
+
+<p class="lede">{{ page.description }}</p>
+
+{%- comment -%}
+  Which pathways use this event, and in what part. The role is read from each
+  BOP, never from this page: that is what lets one event be an outcome in one
+  pathway and an intermediate step in another.
+{%- endcomment -%}
+{%- assign users = site.bops | where_exp: "b", "b.events" -%}
+<h2>Used in</h2>
+{%- assign found = 0 -%}
+<ul class="prose">
+{%- for bop in users -%}
+  {%- for item in bop.events -%}
+    {%- if item.event == page.identifier -%}
+      {%- assign found = found | plus: 1 -%}
+      <li><a href="{{ bop.url | relative_url }}">{{ bop.title }}</a>
+        — plays the <span class="role role-{{ item.role }}">{{ item.role }}</span> part
+        <span class="ident">{{ bop.identifier }}</span></li>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+</ul>
+{%- if found == 0 %}
+<p class="prose">No pathway uses this event yet.</p>
+{%- endif %}
+
+{%- assign ups = site.relationships | where: "downstream_event", page.identifier -%}
+{%- assign downs = site.relationships | where: "upstream_event", page.identifier -%}
+{%- if ups.size > 0 or downs.size > 0 %}
+<h2>Causal links</h2>
+<div class="table-scroll">
+<table>
+  <thead><tr><th scope="col">Direction</th><th scope="col">Relationship</th><th scope="col">Other event</th><th scope="col">Adjacency</th></tr></thead>
+  <tbody>
+  {%- for r in ups -%}
+    {%- assign other = site.events | where: "identifier", r.upstream_event | first %}
+    <tr><td>from</td>
+      <td><a href="{{ r.url | relative_url }}">{{ r.title }}</a><br><span class="ident">{{ r.identifier }}</span></td>
+      <td><a href="{{ other.url | relative_url }}">{{ other.title | default: r.upstream_event }}</a></td>
+      <td>{{ r.adjacency }}</td></tr>
+  {%- endfor -%}
+  {%- for r in downs -%}
+    {%- assign other = site.events | where: "identifier", r.downstream_event | first %}
+    <tr><td>to</td>
+      <td><a href="{{ r.url | relative_url }}">{{ r.title }}</a><br><span class="ident">{{ r.identifier }}</span></td>
+      <td><a href="{{ other.url | relative_url }}">{{ other.title | default: r.downstream_event }}</a></td>
+      <td>{{ r.adjacency }}</td></tr>
+  {%- endfor -%}
+  </tbody>
+</table>
+</div>
+{%- endif %}
+
+{%- if page.process or page.object or page.action %}
+<h2>Biological event</h2>
+<p class="prose">The same three slots an AOP-Wiki key event uses: what happens, to
+what, and in which direction.</p>
+<dl class="facts">
+  <div><dt>Process</dt><dd>{% if page.process %}{% include curie-link.html curie=page.process %}{% else %}<em>not assigned</em>{% endif %}</dd></div>
+  <div><dt>Object</dt><dd>{% if page.object %}{% include curie-link.html curie=page.object %}{% else %}<em>not assigned</em>{% endif %}</dd></div>
+  <div><dt>Action</dt><dd>{% if page.action %}{% include curie-link.html curie=page.action %}{% else %}<em>not assigned</em>{% endif %}</dd></div>
+</dl>
+{%- endif %}
+
+{%- if page.aopwiki_ke or page.aopwiki_mirror_ke or page.wikipathways or page.external_ids %}
+<h2>The same event elsewhere</h2>
+<dl class="facts">
+  {%- if page.aopwiki_ke %}
+  {%- assign ke = page.aopwiki_ke | remove: "aop.events:" %}
+  <div><dt>Is AOP-Wiki key event</dt>
+    <dd><a href="https://aopwiki.org/events/{{ ke }}">KE {{ ke }}</a> — the same event, reused rather than re-minted</dd></div>
+  {%- endif %}
+  {%- if page.aopwiki_mirror_ke %}
+  {%- assign mk = page.aopwiki_mirror_ke | remove: "aop.events:" %}
+  <div><dt>Adverse mirror</dt>
+    <dd><a href="https://aopwiki.org/events/{{ mk }}">KE {{ mk }}</a> — same object, opposite direction, so not the same event</dd></div>
+  {%- endif %}
+  {%- if page.wikipathways %}
+  <div><dt>WikiPathways</dt><dd>
+    {%- for wp in page.wikipathways %}<a href="https://www.wikipathways.org/pathways/{{ wp }}.html">{{ wp }}</a>{% unless forloop.last %}, {% endunless %}{% endfor -%}
+  </dd></div>
+  {%- endif %}
+  {%- if page.external_ids %}
+  <div><dt>Other identifiers</dt><dd>
+    {%- for x in page.external_ids %}{% include curie-link.html curie=x %}{% unless forloop.last %}, {% endunless %}{% endfor -%}
+  </dd></div>
+  {%- endif %}
+</dl>
+{%- endif %}
+
+{%- if page.measurement_methods and page.measurement_methods.size > 0 %}
+<h2>How it is measured</h2>
+<ul class="prose">
+  {%- for m in page.measurement_methods %}
+  <li>{{ m.name }}{% if m.reference %} <span class="ident">{{ m.reference }}</span>{% endif %}</li>
+  {%- endfor %}
+</ul>
+{%- endif %}
+
+<h2>Applicability</h2>
+{% include annotation-chips.html terms=page.taxa       name="Taxonomic applicability" %}
+{% include annotation-chips.html terms=page.sex        name="Sex" %}
+{% include annotation-chips.html terms=page.life_stage name="Life stage" %}
+
+<div class="prose">
+{{ content }}
+</div>
+
+<h2>References</h2>
+{% include references.html refs=page.references %}
+
+<dl class="facts">
+  <div><dt>Canonical IRI</dt><dd><span class="mono">{{ page.url | prepend: site.canonical_base }}</span></dd></div>
+  <div><dt>Last modified</dt><dd>{{ page.modified }}</dd></div>
+  <div><dt>Licence</dt><dd>{{ page.license | default: "CC0-1.0" }}</dd></div>
+</dl>
+<p>{% include edit-link.html path=page.path %}</p>

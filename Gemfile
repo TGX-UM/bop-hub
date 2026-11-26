@@ -11,8 +11,6 @@ source "https://rubygems.org"
 # that happens to bypass the call. Jekyll 4 fixed it properly.
 gem "jekyll", "~> 4.4"
 
-gem "minima", "~> 2.5"
-
 group :jekyll_plugins do
   gem "jekyll-sitemap"
   gem "jekyll-seo-tag"

@@ -1,0 +1,14 @@
+{%- comment -%} Usage: {% include references.html refs=page.references %} {%- endcomment -%}
+{%- if include.refs and include.refs.size > 0 -%}
+<ul class="prose">
+  {%- for r in include.refs -%}
+  <li>
+    {{ r.citation }}
+    {%- if r.doi %} <a href="https://doi.org/{{ r.doi }}">doi:{{ r.doi }}</a>{% endif -%}
+    {%- if r.pmid %} · <a href="https://pubmed.ncbi.nlm.nih.gov/{{ r.pmid }}/">PMID {{ r.pmid }}</a>{% endif -%}
+    {%- if r.pmcid %} · <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/{{ r.pmcid }}/">{{ r.pmcid }}</a>{% endif -%}
+    {%- if r.url %} · <a href="{{ r.url }}">{{ r.url }}</a>{% endif -%}
+  </li>
+  {%- endfor -%}
+</ul>
+{%- endif -%}

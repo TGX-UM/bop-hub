@@ -1,5 +1,5 @@
 ---
-id: "NCBITaxon:9606"
+identifier: "NCBITaxon:9606"
 label: "Homo sapiens"
 slot: [taxa]
 ontology: NCBITaxon

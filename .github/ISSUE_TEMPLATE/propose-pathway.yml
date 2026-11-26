@@ -1,0 +1,68 @@
+name: Propose a pathway
+description: Describe a beneficial outcome pathway. A maintainer will write up the files with you — you do not need to know Jekyll or YAML.
+title: "Pathway: "
+labels: ["pathway proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Fill in what you know. Gaps are fine — a maintainer will work through them with
+        you. Nothing here needs to be in any particular format.
+  - type: input
+    id: intervention
+    attributes:
+      label: Intervention
+      description: What is done, and to whom. A nutrient, dietary pattern, fasting regimen, exercise, or something else.
+      placeholder: "Daily supplementation with vitamin D3 in adults with insufficiency"
+    validations:
+      required: true
+  - type: input
+    id: outcome
+    attributes:
+      label: Beneficial outcome
+      description: The clinically meaningful improvement at the end of the chain. A biomarker change counts only if it translates into how someone feels, functions or survives.
+      placeholder: "Reduced incidence of acute respiratory infection"
+    validations:
+      required: true
+  - type: textarea
+    id: chain
+    attributes:
+      label: The chain of events
+      description: The steps from the trigger to the outcome, one per line, in order. Plain language is fine. Note where the chain branches or rejoins.
+      placeholder: |
+        1. Increased serum 25-hydroxyvitamin D
+        2. Vitamin D receptor activation in monocytes
+        3. Increased cathelicidin expression
+        4. ...
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: DOIs or PMIDs, and which step each one supports. Say what kind of study it is — human trial, cohort, animal, in vitro, in silico.
+      placeholder: |
+        Step 1→2: doi:10.xxxx/yyyy (human RCT, n=180)
+        Step 3→4: PMID 12345678 (in vitro, monocyte culture)
+    validations:
+      required: true
+  - type: textarea
+    id: weak
+    attributes:
+      label: Where is the evidence weakest?
+      description: The most useful thing you can tell us. Which link would you least want to defend?
+  - type: textarea
+    id: applicability
+    attributes:
+      label: Who does this apply to, and who does it not apply to
+      description: Population, species, sex, life stage, disease context. Any group for whom the intervention is ineffective, contraindicated or harmful.
+  - type: textarea
+    id: aops
+    attributes:
+      label: Related adverse outcome pathways
+      description: Any AOP-Wiki AOPs or key events this pathway counteracts or shares events with, if you know of some.
+  - type: input
+    id: curator
+    attributes:
+      label: How should we credit you?
+      description: Name, and ORCID if you have one. Leave blank to stay uncredited.
