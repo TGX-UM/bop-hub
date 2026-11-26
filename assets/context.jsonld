@@ -1,15 +1,24 @@
 {
   "@context": {
     "@version": 1.1,
+    "_comment_vocab": "@vocab makes a graded value an IRI: essentiality `strong` becomes bopv:strong, which is a SKOS concept in the published vocabulary rather than a bare string. It also means an unmapped KEY would quietly expand to bopv:<key> instead of being dropped, so tools/export_rdf.py checks each key against this context explicitly and will not rely on that.",
+    "@vocab": "https://w3id.org/bop-hub/vocab#",
+    "_comment_namespaces": "aopo, ncit, edam, obo and ncbitaxon are the namespaces AOP-Wiki RDF itself uses, so a predicate reused from there joins without translation. bopv is BOP-Hub's own vocabulary, for the concepts the AOP framework has no term for. nci is kept as an alias of ncit because earlier versions of this context used it.",
     "aopo": "http://aopkb.org/aop_ontology#",
+    "ncit": "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#",
+    "nci": "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#",
+    "edam": "http://edamontology.org/",
+    "obo": "http://purl.obolibrary.org/obo/",
+    "ncbitaxon": "http://purl.bioontology.org/ontology/NCBITAXON/",
     "dcterms": "http://purl.org/dc/terms/",
     "dc": "http://purl.org/dc/elements/1.1/",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
-    "nci": "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#",
     "pav": "http://purl.org/pav/",
     "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
     "bop": "https://w3id.org/bop-hub/",
+    "bopv": "https://w3id.org/bop-hub/vocab#",
     "GO": "http://purl.obolibrary.org/obo/GO_",
     "CHEBI": "http://purl.obolibrary.org/obo/CHEBI_",
     "CL": "http://purl.obolibrary.org/obo/CL_",
@@ -18,6 +27,7 @@
     "MONDO": "http://purl.obolibrary.org/obo/MONDO_",
     "DOID": "http://purl.obolibrary.org/obo/DOID_",
     "HP": "http://purl.obolibrary.org/obo/HP_",
+    "EFO": "http://purl.obolibrary.org/obo/EFO_",
     "NCBITaxon": "http://purl.obolibrary.org/obo/NCBITaxon_",
     "HsapDv": "http://purl.obolibrary.org/obo/HsapDv_",
     "FOODON": "http://purl.obolibrary.org/obo/FOODON_",
@@ -29,14 +39,28 @@
     "aop.events": "https://identifiers.org/aop.events/",
     "aop.relationships": "https://identifiers.org/aop.relationships/",
     "iri": "@id",
+    "page_iri": {
+      "@id": "bopv:canonicalIri",
+      "@type": "@id"
+    },
+    "url": {
+      "@id": "foaf:page",
+      "@type": "@id"
+    },
     "identifier": {
       "@id": "dcterms:identifier"
     },
     "title": {
       "@id": "dcterms:title"
     },
+    "short_title": {
+      "@id": "dcterms:alternative"
+    },
     "description": {
       "@id": "dcterms:description"
+    },
+    "body_markdown": {
+      "@id": "bopv:body"
     },
     "label": {
       "@id": "rdfs:label"
@@ -48,32 +72,60 @@
       "@id": "skos:altLabel",
       "@container": "@set"
     },
-    "modified": {
-      "@id": "dcterms:modified",
-      "@type": "http://www.w3.org/2001/XMLSchema#date"
+    "comment": {
+      "@id": "rdfs:comment"
+    },
+    "note": {
+      "@id": "rdfs:comment"
     },
     "created": {
       "@id": "dcterms:created",
-      "@type": "http://www.w3.org/2001/XMLSchema#date"
+      "@type": "xsd:date"
+    },
+    "modified": {
+      "@id": "dcterms:modified",
+      "@type": "xsd:date"
     },
     "license": {
-      "@id": "dcterms:license"
+      "@id": "dcterms:license",
+      "@type": "@id"
+    },
+    "status": {
+      "@id": "bopv:status",
+      "@type": "@vocab"
+    },
+    "replaced_by": {
+      "@id": "dcterms:isReplacedBy",
+      "@type": "@id"
     },
     "references": {
       "@id": "dcterms:references",
       "@container": "@set"
     },
+    "citation": {
+      "@id": "dcterms:bibliographicCitation"
+    },
+    "doi": {
+      "@id": "bopv:doi"
+    },
+    "pmid": {
+      "@id": "bopv:pmid"
+    },
+    "pmcid": {
+      "@id": "bopv:pmcid"
+    },
     "curators": {
       "@id": "pav:curatedBy",
       "@container": "@set"
     },
-    "orcid": {
-      "@id": "@id"
-    },
+    "orcid": "@id",
     "name": {
       "@id": "foaf:name"
     },
-    "_comment_mapping": "Where a BOP concept has an AOP-ontology counterpart it reuses that term, because the two frameworks share a grammar and should be queryable together. The event/relationship structure maps onto aopo directly; no term is minted for the beneficial direction, which is carried by the PATO action on the event instead.",
+    "github": {
+      "@id": "bopv:github"
+    },
+    "_comment_structure": "Where a BOP concept has an AOP-ontology counterpart it reuses that term, because the two frameworks share a grammar and should be queryable together. No term is minted for the beneficial direction: that is carried by the PATO action on the event.",
     "events": {
       "@id": "aopo:has_key_event",
       "@container": "@set"
@@ -98,9 +150,22 @@
       "@id": "aopo:has_downstream_key_event",
       "@type": "@id"
     },
-    "biological_level": {
-      "@id": "nci:C25664"
+    "role": {
+      "@id": "bopv:role",
+      "@type": "@vocab"
     },
+    "position": {
+      "@id": "bopv:position",
+      "@type": "xsd:integer"
+    },
+    "adjacency": {
+      "@id": "bopv:adjacency",
+      "@type": "@vocab"
+    },
+    "biological_level": {
+      "@id": "ncit:C25664"
+    },
+    "_comment_bioevent": "AOP-Wiki RDF does not put the triple on the key event directly: it hangs an aopo:BiologicalEvent node off aopo:hasBiologicalEvent carrying obo:GO_0008150 (process), obo:PATO_0001241 (object) and obo:PATO_0000001 (action). BOP-Hub keeps the flat form, so these three are not join-compatible with AOP-Wiki as they stand; reshaping to a bioevent node is a content change, not a context change.",
     "process": {
       "@id": "aopo:has_process",
       "@type": "@id"
@@ -113,26 +178,85 @@
       "@id": "aopo:has_action",
       "@type": "@id"
     },
+    "measurement_methods": {
+      "@id": "obo:MMO_0000000",
+      "@container": "@set"
+    },
+    "_comment_evidence": "The three modified-Bradford-Hill dimensions reuse the predicates AOP-Wiki RDF carries on a KER (ncit:C80263, edam:data_2042, edam:operation_3799), and essentiality reuses ncit:C48192 from an AOP. AOP-Wiki's values are free prose; BOP-Hub's are graded concepts from bopv, so the predicate is shared and the value space is not. confidence has no AOP-Wiki counterpart and is minted.",
+    "evidence": {
+      "@id": "bopv:evidence"
+    },
+    "biological_plausibility": {
+      "@id": "ncit:C80263",
+      "@type": "@vocab"
+    },
+    "empirical_support": {
+      "@id": "edam:data_2042",
+      "@type": "@vocab"
+    },
+    "quantitative_understanding": {
+      "@id": "edam:operation_3799",
+      "@type": "@vocab"
+    },
+    "essentiality": {
+      "@id": "ncit:C48192",
+      "@type": "@vocab"
+    },
+    "confidence": {
+      "@id": "bopv:confidence",
+      "@type": "@vocab"
+    },
+    "overall_confidence": {
+      "@id": "bopv:overallConfidence",
+      "@type": "@vocab"
+    },
+    "_comment_applicability": "taxa, sex and life_stage use the predicates AOP-Wiki RDF actually uses (ncbitaxon:131567 with 4,035 uses, obo:PATO_0000047 with 1,622, aopo:LifeStageContext with 1,680, in release 2026.11.21). An earlier version of this context mapped taxa to aopo:TaxonomicApplicability, which appears zero times in AOP-Wiki RDF, so the join it existed for could never have matched. interventions, diseases and phenotypes have no AOP-Wiki counterpart -- AOP-Wiki carries domain of applicability as free text in aopo:AopContext -- so they are minted.",
     "taxa": {
-      "@id": "aopo:TaxonomicApplicability",
+      "@id": "ncbitaxon:131567",
+      "@type": "@id",
       "@container": "@set"
     },
     "sex": {
+      "@id": "obo:PATO_0000047",
+      "@type": "@id",
       "@container": "@set"
     },
     "life_stage": {
-      "@container": "@set"
-    },
-    "diseases": {
-      "@container": "@set"
-    },
-    "phenotypes": {
+      "@id": "aopo:LifeStageContext",
+      "@type": "@id",
       "@container": "@set"
     },
     "interventions": {
+      "@id": "bopv:intervention",
+      "@type": "@id",
       "@container": "@set"
     },
+    "diseases": {
+      "@id": "bopv:disease",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "phenotypes": {
+      "@id": "bopv:phenotype",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "modulating_factors": {
+      "@id": "bopv:modulatingFactor",
+      "@container": "@set"
+    },
+    "factor": {
+      "@id": "bopv:factor"
+    },
+    "direction": {
+      "@id": "bopv:modulationDirection",
+      "@type": "@vocab"
+    },
     "aopwiki_ke": {
+      "@id": "skos:exactMatch",
+      "@type": "@id"
+    },
+    "aopwiki_ker": {
       "@id": "skos:exactMatch",
       "@type": "@id"
     },
@@ -140,19 +264,34 @@
       "@id": "skos:related",
       "@type": "@id"
     },
-    "aopwiki_ker": {
-      "@id": "skos:exactMatch",
-      "@type": "@id"
-    },
     "wikipathways": {
       "@id": "skos:related",
       "@type": "@id",
       "@container": "@set"
     },
-    "related_aops": {
+    "external_ids": {
+      "@id": "skos:related",
+      "@type": "@id",
       "@container": "@set"
     },
+    "related_aops": {
+      "@id": "bopv:relatedAop",
+      "@container": "@set"
+    },
+    "relation": {
+      "@id": "bopv:aopRelation",
+      "@type": "@vocab"
+    },
+    "slot": {
+      "@id": "bopv:slot",
+      "@type": "@vocab"
+    },
+    "ontology": {
+      "@id": "bopv:ontology"
+    },
+    "_comment_excluded": "source_path, counts, commit, generated, canonical_base, content_digest, endpoints and next_ids are export bookkeeping, not content. tools/export_rdf.py drops them and fails if any OTHER key reaches it unmapped, so this context cannot silently fall behind the schema again.",
     "bops": {
+      "@id": "bopv:bop",
       "@container": "@set"
     }
   }

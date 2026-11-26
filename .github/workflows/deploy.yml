@@ -65,6 +65,8 @@ jobs:
         run: python tools/export.py --out _site/api/v1 --site-url "${{ steps.pages.outputs.base_url }}"
       # A broken export would otherwise deploy a perfect-looking site whose
       # API is missing, and nothing would go red.
+      - name: Export RDF
+        run: python tools/export_rdf.py --graph _site/api/v1/graph.json --out _site/rdf
       - name: Check the API was written
         run: |
           test -f _site/api/v1/index.json || { echo "api/v1/index.json is missing"; exit 1; }
@@ -74,6 +76,7 @@ jobs:
             echo "$c: $on_disk on disk, $in_dump in the dump"
             [ "$on_disk" = "$in_dump" ] || { echo "count mismatch for $c"; exit 1; }
           done
+          test -s _site/rdf/bop-hub.ttl || { echo "rdf/bop-hub.ttl is missing or empty"; exit 1; }
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
 

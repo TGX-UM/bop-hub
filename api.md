@@ -81,6 +81,28 @@ into <code>enum</code>s — the same objects the exporter validated against.
 <p>If you validate in a browser with Ajv, add <code>ajv-formats</code>: without it
 <code>"format": "date"</code> is ignored and a malformed date passes.</p>
 
+<h2>RDF</h2>
+
+<ul>
+  <li><a href="{{ '/rdf/bop-hub.ttl' | relative_url }}"><code>/rdf/bop-hub.ttl</code></a>,
+      also as <code>.nt</code> and <code>.jsonld</code></li>
+</ul>
+
+<p>Generated from the same JSON, with
+<a href="{{ '/assets/context.jsonld' | relative_url }}"><code>assets/context.jsonld</code></a>
+supplying the meanings. Where the AOP framework already has a term, BOP-Hub reuses the
+predicate AOP-Wiki RDF itself uses, so the two join without translation: taxonomic, sex
+and life-stage applicability, the level of biological organisation, and the three
+modified-Bradford-Hill dimensions on a relationship. Everything with no AOP counterpart —
+a BOP's roles, confidences, adjacency, applicability slots and modulating factors — is
+minted under <code>{{ site.canonical_base }}/vocab#</code>.</p>
+
+<p>Graded values are IRIs rather than strings: <code>essentiality: strong</code> becomes
+<code>bopv:strong</code>, a SKOS concept published in the same file alongside the nine
+concept schemes the controlled vocabularies form. A record's subject is its canonical
+IRI, except an annotation, whose subject is the ontology term's own PURL with
+<code>bopv:canonicalIri</code> pointing back at the BOP-Hub page.</p>
+
 <h2>Fixity</h2>
 
 <p><code>/api/v1/manifest.json</code> gives a SHA-256 for every file plus a

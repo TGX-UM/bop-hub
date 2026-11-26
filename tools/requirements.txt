@@ -1,3 +1,4 @@
 # Pinned so a CI run and a laptop run reach the same verdict.
 PyYAML==6.0.2
 jsonschema==4.23.0
+rdflib==7.6.0
