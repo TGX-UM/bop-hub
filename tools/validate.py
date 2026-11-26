@@ -352,7 +352,7 @@ def check_reuse_hints(docs, report):
     """Nudge towards interoperability: an event with no external anchor at all
     is either genuinely novel or a near-duplicate of something in AOP-Wiki."""
     for rel, data in docs["_events"].items():
-        anchors = ("aopwiki_ke", "wikipathways", "external_ids", "process")
+        anchors = ("aopwiki_ke", "aopwiki_mirror_ke", "wikipathways", "external_ids", "process")
         if not any(data.get(a) for a in anchors):
             report.warn(str(rel), "no aopwiki_ke, wikipathways, external_ids or process term -- "
                                   "search AOP-Wiki before minting a new event")
