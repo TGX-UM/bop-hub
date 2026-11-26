@@ -1,11 +1,16 @@
 source "https://rubygems.org"
 
-# GitHub Pages pins Jekyll and its dependencies. Keep the local setup aligned
-# with whatever GitHub runs: https://pages.github.com/versions/
-#   bundle update github-pages
-gem "github-pages", group: :jekyll_plugins
+# Jekyll 4 directly, NOT the `github-pages` gem.
+#
+# `github-pages` exists to mirror the gem versions GitHub's own legacy,
+# branch-based Pages builder runs. This site builds in its own Actions
+# workflow (Settings -> Pages -> Source = GitHub Actions), so those pins buy
+# nothing -- and they actively break: github-pages 222 pins liquid 4.0.3,
+# whose taint_check calls Object#tainted?, removed in Ruby 3.2. The upstream
+# Jiffy template only survived that by depending on liquid-c, a C extension
+# that happens to bypass the call. Jekyll 4 fixed it properly.
+gem "jekyll", "~> 4.4"
 
-# The default Jekyll theme, inherited from the Jiffy template.
 gem "minima", "~> 2.5"
 
 group :jekyll_plugins do
