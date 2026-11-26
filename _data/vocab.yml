@@ -1,0 +1,100 @@
+# ---------------------------------------------------------------------------
+# Controlled vocabularies for BOP-Hub.
+#
+# Single source of truth: the Liquid layouts render from these lists and
+# tools/validate.py enforces them. Closed enums live here; ontology TERMS
+# live in _annotations/ instead, because those are browsable and these are
+# not.
+#
+# Adding a value here is a schema change. Say so in the commit message.
+# ---------------------------------------------------------------------------
+
+# Curation state of a BOP, event or relationship page.
+status:
+  - draft
+  - under-review
+  - endorsed
+  - deprecated
+
+# The part an event plays IN A GIVEN BOP. Declared on the BOP's event list,
+# never on the event page: the same event is an outcome in one BOP and an
+# intermediate key event in another.
+role:
+  - initiating
+  - key
+  - outcome
+
+# Level of biological organisation at which an event is observed. Follows the
+# AOP convention.
+biological_level:
+  - molecular
+  - cellular
+  - tissue
+  - organ
+  - individual
+  - population
+
+# Whether a relationship joins two consecutive events or spans over others.
+adjacency:
+  - adjacent
+  - non-adjacent
+
+# Modified Bradford-Hill dimensions carried by a relationship page. See
+# CONTRIBUTING.md for what each level means.
+evidence_level:
+  - high
+  - moderate
+  - low
+  - not-specified
+
+# How strongly a BOP depends on a given relationship, assigned in the context
+# of that BOP.
+essentiality:
+  - strong
+  - moderate
+  - weak
+  - not-specified
+
+# Overall confidence in a whole BOP.
+confidence:
+  - high
+  - moderate
+  - low
+  - not-specified
+
+# How a BOP relates to an AOP it touches.
+aop_relation:
+  - counteracts
+  - shares-events
+  - modulates
+  - related
+
+# Direction in which a modulating factor acts on a BOP.
+modulation_direction:
+  - enhances
+  - attenuates
+  - modulates
+
+# CURIE prefixes a curator may use without first creating an _annotations
+# page. Anything outside this list must either be added here or be backed by
+# an annotation page.
+curie_prefixes:
+  - GO
+  - CHEBI
+  - CL
+  - UBERON
+  - PATO
+  - MONDO
+  - DOID
+  - HP
+  - EFO
+  - NCBITaxon
+  - HsapDv
+  - MESH
+  - FOODON
+  - UniProt
+  - Reactome
+  - WP
+  - aop
+  - aop.events
+  - aop.relationships

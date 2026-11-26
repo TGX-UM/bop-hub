@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/bop-hub/schema/_defs",
+  "title": "Shared definitions",
+  "$defs": {
+    "curie": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9._]*:[A-Za-z0-9][A-Za-z0-9_.-]*$",
+      "description": "A compact ontology identifier, e.g. \"MONDO:0007190\". MUST be quoted in YAML: an unquoted `- CHEBI:15756` parses as the mapping {CHEBI: 15756}, not a string."
+    },
+    "curieList": {
+      "type": "array",
+      "items": {"$ref": "_defs#/$defs/curie"},
+      "uniqueItems": true
+    },
+    "reference": {
+      "type": "object",
+      "properties": {
+        "doi": {"type": "string", "pattern": "^10\\.[0-9]{4,9}/[^\\s]+$"},
+        "pmid": {"type": "string", "pattern": "^[0-9]+$"},
+        "pmcid": {"type": "string", "pattern": "^PMC[0-9]+$"},
+        "url": {"type": "string", "pattern": "^https?://"},
+        "citation": {"type": "string"}
+      },
+      "anyOf": [
+        {"required": ["doi"]},
+        {"required": ["pmid"]},
+        {"required": ["url"]}
+      ],
+      "additionalProperties": false
+    },
+    "referenceList": {
+      "type": "array",
+      "items": {"$ref": "_defs#/$defs/reference"},
+      "minItems": 1
+    },
+    "curator": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "orcid": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$"},
+        "github": {"type": "string"}
+      },
+      "required": ["name"],
+      "additionalProperties": false
+    },
+    "applicability": {
+      "taxa": {"$ref": "_defs#/$defs/curieList"},
+      "sex": {"$ref": "_defs#/$defs/curieList"},
+      "life_stage": {"$ref": "_defs#/$defs/curieList"}
+    }
+  }
+}

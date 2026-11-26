@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/bop-hub/schema/annotation",
+  "title": "Ontology term",
+  "type": "object",
+  "required": ["id", "label", "slot", "ontology", "iri"],
+  "additionalProperties": false,
+  "properties": {
+    "layout": {"type": "string"},
+    "redirect_from": {"type": "array", "items": {"type": "string"}},
+
+    "id": {"$ref": "_defs#/$defs/curie"},
+    "label": {"type": "string"},
+    "slot": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Which front-matter slots use this term. Must be members of site.annotation_slots.",
+      "items": {"type": "string"}
+    },
+    "ontology": {"type": "string"},
+    "iri": {"type": "string", "pattern": "^https?://"},
+    "definition": {"type": "string"},
+    "synonyms": {"type": "array", "items": {"type": "string"}}
+  }
+}

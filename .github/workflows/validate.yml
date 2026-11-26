@@ -1,0 +1,32 @@
+# Schema and referential-integrity checks for curated BOP content.
+#
+# Runs on pull requests so a curator sees the verdict before a maintainer
+# merges, and on main as a backstop. This is separate from the deploy
+# workflow on purpose: Jekyll will happily build a site whose cross-
+# references are broken.
+name: Validate content
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install --require-hashes=false -r tools/requirements.txt
+      - name: Validate
+        run: python tools/validate.py

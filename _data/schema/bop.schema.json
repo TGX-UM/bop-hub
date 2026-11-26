@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/bop-hub/schema/bop",
+  "title": "Beneficial Outcome Pathway",
+  "type": "object",
+  "required": ["id", "title", "description", "status", "events", "references", "curators", "created", "modified"],
+  "additionalProperties": false,
+  "properties": {
+    "layout": {"type": "string"},
+    "redirect_from": {"type": "array", "items": {"type": "string"}},
+
+    "id": {"type": "string", "pattern": "^BOP:[1-9][0-9]*$"},
+    "title": {"type": "string", "minLength": 10},
+    "short_title": {"type": "string"},
+    "description": {"type": "string", "minLength": 40},
+
+    "status": {"type": "string", "x-vocab": "status"},
+    "overall_confidence": {"type": "string", "x-vocab": "confidence"},
+
+    "events": {
+      "type": "array",
+      "minItems": 2,
+      "description": "The nodes of this BOP. `role` is the part the event plays HERE and is never stored on the event page.",
+      "items": {
+        "type": "object",
+        "required": ["event", "role"],
+        "additionalProperties": false,
+        "properties": {
+          "event": {"type": "string", "pattern": "^BOPE:[0-9]{4}$"},
+          "role": {"type": "string", "x-vocab": "role"}
+        }
+      }
+    },
+
+    "relationships": {
+      "type": "array",
+      "description": "The edges of this BOP. Each references a relationship page, which holds the intrinsic evidence, and rates it in the context of THIS BOP.",
+      "items": {
+        "type": "object",
+        "required": ["ker"],
+        "additionalProperties": false,
+        "properties": {
+          "ker": {"type": "string", "pattern": "^BOPR:[0-9]{4}$"},
+          "essentiality": {"type": "string", "x-vocab": "essentiality"},
+          "confidence": {"type": "string", "x-vocab": "confidence"},
+          "comment": {"type": "string"}
+        }
+      }
+    },
+
+    "interventions": {"$ref": "_defs#/$defs/curieList"},
+    "taxa": {"$ref": "_defs#/$defs/curieList"},
+    "sex": {"$ref": "_defs#/$defs/curieList"},
+    "life_stage": {"$ref": "_defs#/$defs/curieList"},
+    "diseases": {"$ref": "_defs#/$defs/curieList"},
+    "phenotypes": {"$ref": "_defs#/$defs/curieList"},
+
+    "modulating_factors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["factor", "direction"],
+        "additionalProperties": false,
+        "properties": {
+          "factor": {"type": "string"},
+          "direction": {"type": "string", "x-vocab": "modulation_direction"},
+          "comment": {"type": "string"}
+        }
+      }
+    },
+
+    "related_aops": {
+      "type": "array",
+      "description": "Crosswalk to AOP-Wiki. This is what lets beneficial and adverse pathways be read together.",
+      "items": {
+        "type": "object",
+        "required": ["aop", "relation"],
+        "additionalProperties": false,
+        "properties": {
+          "aop": {"type": "string", "pattern": "^aop:[0-9]+$"},
+          "relation": {"type": "string", "x-vocab": "aop_relation"},
+          "note": {"type": "string"}
+        }
+      }
+    },
+
+    "references": {"$ref": "_defs#/$defs/referenceList"},
+    "curators": {"type": "array", "minItems": 1, "items": {"$ref": "_defs#/$defs/curator"}},
+    "created": {"type": "string", "format": "date"},
+    "modified": {"type": "string", "format": "date"},
+    "license": {"type": "string"},
+    "replaced_by": {"type": "string"}
+  }
+}

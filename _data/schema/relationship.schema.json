@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/bop-hub/schema/relationship",
+  "title": "Key event relationship",
+  "description": "A reusable causal link between two events. Holds the INTRINSIC evidence for the link; a BOP additionally rates its essentiality and confidence in that BOP's own context.",
+  "type": "object",
+  "required": ["id", "title", "upstream_event", "downstream_event", "adjacency", "evidence", "status", "references", "curators", "created", "modified"],
+  "additionalProperties": false,
+  "properties": {
+    "layout": {"type": "string"},
+    "redirect_from": {"type": "array", "items": {"type": "string"}},
+
+    "id": {"type": "string", "pattern": "^BOPR:[0-9]{4}$"},
+    "title": {"type": "string", "minLength": 10},
+    "description": {"type": "string"},
+
+    "upstream_event": {"type": "string", "pattern": "^BOPE:[0-9]{4}$"},
+    "downstream_event": {"type": "string", "pattern": "^BOPE:[0-9]{4}$"},
+    "adjacency": {"type": "string", "x-vocab": "adjacency"},
+
+    "evidence": {
+      "type": "object",
+      "required": ["biological_plausibility", "empirical_support", "quantitative_understanding"],
+      "additionalProperties": false,
+      "properties": {
+        "biological_plausibility": {"type": "string", "x-vocab": "evidence_level"},
+        "empirical_support": {"type": "string", "x-vocab": "evidence_level"},
+        "quantitative_understanding": {"type": "string", "x-vocab": "evidence_level"}
+      }
+    },
+
+    "aopwiki_ker": {"type": "string", "pattern": "^aop\\.relationships:[0-9]+$"},
+
+    "taxa": {"$ref": "_defs#/$defs/curieList"},
+    "sex": {"$ref": "_defs#/$defs/curieList"},
+    "life_stage": {"$ref": "_defs#/$defs/curieList"},
+
+    "status": {"type": "string", "x-vocab": "status"},
+    "references": {"$ref": "_defs#/$defs/referenceList"},
+    "curators": {"type": "array", "minItems": 1, "items": {"$ref": "_defs#/$defs/curator"}},
+    "created": {"type": "string", "format": "date"},
+    "modified": {"type": "string", "format": "date"},
+    "license": {"type": "string"},
+    "replaced_by": {"type": "string"}
+  }
+}
