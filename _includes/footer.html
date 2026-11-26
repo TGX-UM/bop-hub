@@ -1,0 +1,36 @@
+<footer class="site-footer h-card"> 
+  <data class="u-url" href="{{ "/" | relative_url }}"></data>
+
+  <div class="wrapper">
+      <a href="https://github.com/{{site.github_username}}/{{site.github_repo}}/commits" target="_blank">
+        <img alt="GitHub last commit"
+          src="https://img.shields.io/github/last-commit/{{site.github_username}}/{{site.github_repo}}?label=updated">
+      </a>
+      <a href="https://github.com/{{site.github_username}}/{{site.github_repo}}/deployments" target="_blank">
+        <img alt="GitHub deployment state" 
+        src="https://img.shields.io/github/deployments/{{site.github_username}}/{{site.github_repo}}/github-pages">
+      </a>
+      <p style="margin-bottom: 5px;" />
+
+    <div class="row"> 
+
+  
+      <div class="col text-nowrap">
+        <ul class="contact-list">
+          <li><a href="{{ "/about.html" | relative_url }}">About</a></li>
+          <li><a href="{{ "/help.html" | relative_url }}">Help</a></li>
+          <li><a href="{{ "/browse/annotations.html" | relative_url }}">Annotations</a></li>
+        </ul>
+      </div>
+
+      <div class="col text-nowrap">
+        <ul class="contact-list">
+          <li><a href="{{ "/stats.html" | relative_url }}">Statistics</a></li>
+          <li><a href="https://github.com/{{site.github_username}}/{{site.github_repo}}/discussions" target="_blank">Start a discussion</a></li>
+          <li><a href="https://github.com/{{site.github_username}}/{{site.github_repo}}/issues" target="_blank">Report a bug</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</footer>
