@@ -342,10 +342,10 @@ def check_orphans(docs, report):
 
     for rel, data in docs["_events"].items():
         if isinstance(data.get("identifier"), str) and data["identifier"] not in used_events:
-            report.warn(str(rel), f"{data['id']} is not used by any BOP")
+            report.warn(str(rel), f"{data['identifier']} is not used by any BOP")
     for rel, data in docs["_relationships"].items():
         if isinstance(data.get("identifier"), str) and data["identifier"] not in used_kers:
-            report.warn(str(rel), f"{data['id']} is not used by any BOP")
+            report.warn(str(rel), f"{data['identifier']} is not used by any BOP")
 
 
 def check_reuse_hints(docs, report):
