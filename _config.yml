@@ -1,88 +1,110 @@
-# Welcome to Jekyll!
+# ---------------------------------------------------------------------------
+# BOP-Hub -- Beneficial Outcome Pathway Hub
 #
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-#
-# If you need help with YAML syntax, here are some quick references for you: 
-# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
-# https://learnxinyminutes.com/docs/yaml/
-#
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
+# NOTE: Jekyll does NOT reload this file while `jekyll serve` is running.
+# Restart the server after every change here.
+# ---------------------------------------------------------------------------
 
-title: Jiffy Demo Site # Your awesome title
-email: your-email@example.com
-tagline: Quick and easy wiki functionality with Jekyll # Write an awesome tagline for your new site here
-description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. 
-baseurl: "/Jiffy" # the subpath of your site, e.g. /blog
-url: "https://alexanderpico.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-github_username: alexanderpico # the username
-github_repo: Jiffy # the repository name
+# --- identity --------------------------------------------------------------
+title: BOP-Hub
+tagline: The Beneficial Outcome Pathway Hub
+description: >-
+  A community-curated, FAIR knowledge base of Beneficial Outcome Pathways
+  (BOPs): causal chains linking a beneficial exposure or intervention through
+  key events to a beneficial health outcome. The beneficial counterpart to
+  AOP-Wiki.
 
-# Build settings
-incremental: true
+url: "https://tgx-um.github.io"
+# Kept committed so a local `jekyll serve` matches production. CI overrides it
+# with --baseurl "${{ steps.pages.outputs.base_path }}", so moving to a custom
+# domain is a settings change, not a commit.
+baseurl: "/bop-hub"
+
+github_username: TGX-UM
+github_repo: bop-hub
+repository: TGX-UM/bop-hub
+discussion_forum: github.com/TGX-UM/bop-hub/discussions
+
+# --- FAIR: content IRIs must not depend on where the site is hosted --------
+# Canonical IRIs are COMPUTED from this, never stored in a page. Moving from
+# tgx-um.github.io/bop-hub/ to a custom domain must not invalidate an IRI.
+canonical_base: "https://w3id.org/bop-hub"
+
+id_prefixes:
+  bop: "BOP"
+  event: "BOPE"
+  relationship: "BOPR"
+
+# Front-matter keys that hold ontology CURIEs. Drives the annotation reverse
+# lookup and the facets on browse/annotations.html.
+annotation_slots:
+  - interventions
+  - taxa
+  - sex
+  - life_stage
+  - diseases
+  - phenotypes
+
+# Diagram engine for BOP pages: `mermaid` or `table`. Setting this to `table`
+# disables the Mermaid CDN script in one commit if it ever breaks.
+diagram_engine: mermaid
+mermaid_version: "11.4.1"
+
+# --- build -----------------------------------------------------------------
+markdown: kramdown
 theme: minima
 plugins:
-  - jekyll-feed
   - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-redirect-from
   - jekyll-include-cache
 
-markdown: kramdown
+# `incremental` is deliberately NOT enabled. This site is full of reverse
+# lookups: adding a BOP must rebuild the event pages that count how many BOPs
+# cite them. Incremental builds would leave those stale and internally
+# inconsistent, which no test catches.
 
-# Exclude from processing.
-# The following items will not be processed, by default.
-# Any item listed under the `exclude:` key here will be automatically added to
-# the internal "default list".
-#
-# Excluded items can be processed by explicitly listing the directories or
-# their entries' file path in the `include:` list.
-#
 exclude:
-#   - .sass-cache/
+  - Gemfile
+  - Gemfile.lock
   - vendor
   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules/
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+  - tools
+  - README.md
+  - CONTRIBUTING.md
+  - CODE_OF_CONDUCT.md
+  - NOTICE
 
-# Defaults
-defaults:
-  - scope:
-      path: "/Jiffy" # Update this to match the baseurl
-      type: "entries"
-    values:
-      layout: "entry-page"
-  - scope:
-      path: "/Jiffy" # Update this to match the baseurl
-      type: "annotations"
-    values:
-      layout: "annotation-page"
-  - scope:
-      path: "/Jiffy" # Update this to match the baseurl
-    values:
-      layout: "default"
-      sitemap: false
-
-# Custom collections
+# --- collections -----------------------------------------------------------
 collections:
-  entries:
+  bops:
     output: true
+    permalink: /bops/:name/
+  events:
+    output: true
+    permalink: /events/:name/
+  relationships:
+    output: true
+    permalink: /relationships/:name/
   annotations:
     output: true
+    permalink: /annotations/:name/
   browse:
     output: true
+    permalink: /browse/:name/
+
+# `type:` must be the PLURAL collection key. A typo here silently yields
+# unstyled pages with no error.
+defaults:
+  - scope: {path: "", type: "bops"}
+    values: {layout: "bop-page"}
+  - scope: {path: "", type: "events"}
+    values: {layout: "event-page"}
+  - scope: {path: "", type: "relationships"}
+    values: {layout: "relationship-page"}
+  - scope: {path: "", type: "annotations"}
+    values: {layout: "annotation-page"}
+  - scope: {path: "", type: "browse"}
+    values: {layout: "default"}
+  - scope: {path: ""}
+    values: {layout: "default", sitemap: false}
