@@ -3,11 +3,13 @@
 How BOP-Hub looks, and why. This covers the website, figures, slides, posters and
 anything else that goes out under the name.
 
-**The palette is the Maastricht University house style.** The mark's three
-non-green colours were each checked against the UM style guide and each one is a
-UM colour that the image generator rendered slightly off. The values below are the
-**official UM ones**, not the samples: the logo file is the lossy artifact, the
-house style is the source. §2 shows the measurements.
+**The palette is Maastricht University house style.** The mark's three non-green
+colours were each checked against the UM palettes and each one is a UM colour
+rendered slightly off. The values below are the **official UM ones**, not the
+samples. §2 shows the measurements.
+
+Measure against `~/Downloads/BOP_Hub_logo_Final_png.png`, the original artwork —
+**not** against `assets/img/bop-hub-logo-master.png`, whose orange is corrupt (§1).
 
 The machine-readable copies live in two places and nowhere else:
 
@@ -63,23 +65,41 @@ BOP-Hub's own and not the department's.
 - Do not set the word "BOP-Hub" in type next to the mark. The mark is the wordmark.
 - Alt text is `BOP-Hub`, not a description of the drawing.
 
-### Known gap: the mark needs redrawing as a vector
+### Known problem: the archive master is corrupt
 
-Two problems, one fix.
+`bop-hub-logo-master.png` exists so the other files can be regenerated from it.
+It cannot be used for that. Generating the derivatives re-encoded everything to a
+64-colour palette, which is lossless for flat artwork **except** that it merged the
+orange:
 
-**It is raster.** Every file above is upscaled from a generated image and its edges
-carry compression noise. Survivable on screen; at poster scale it is not — a
-1200 px master at A0 is roughly 40 px/inch.
+| Colour | Original artwork | In the master | ΔE |
+|---|---|---|---|
+| navy | `#02264C` | `#02264C` | 0.0 |
+| blue | `#00B1DC` | `#00B1DC` | 0.0 |
+| green | `#4AA718` | `#4AA519` | 0.6 |
+| **orange** | **`#FE6107`** | **`#BA5726`** | **13.3** |
 
-**It is off the house style.** The generator rendered all three UM colours a few
-ΔE off, and the orange-red worst: the mark draws it at `#BA5726`, a muddy rust,
-where UM publishes `#D2460F`. Beside anything else in UM house style — a slide
-template, a poster header, the UM logo itself — the mark's warm bar is visibly
-dull. The navy and blue are close enough to pass unnoticed; the orange is not.
+A ΔE of 13 is not a rounding difference; it is a bright orange turned into a muddy
+rust. The served `bop-hub-logo.png` is **fine** (`#FE6309`), so nothing on the site
+is wrong today — but regenerate from the master and the corruption propagates into
+every derivative at once.
 
-**Redraw it as SVG on the official hexes** (§2) before the first printed poster or
-any journal figure. The tokens in this document already carry those values, so the
-redraw brings the artwork to the documentation rather than the other way round.
+Two things to do:
+
+1. **Move `~/Downloads/BOP_Hub_logo_Final_png.png` somewhere durable** —
+   `10_Admin/TGX/logo/` beside the TGX marks, or the BOP project folder. Downloads
+   gets triaged, and it is currently the only uncorrupted copy of the artwork.
+2. **Regenerate the master from it without the palette reduction**, or with a
+   palette that keeps the orange.
+
+### Known gap: there is no vector master
+
+Every file is raster, upscaled from a generated image, and its edges carry
+compression noise. Survivable on screen; at poster scale it is not — a 1200 px
+master at A0 is roughly 40 px/inch. Redraw the mark as SVG on the hexes in §2
+before the first printed poster or any journal figure. The tokens already carry
+those values, so the redraw brings the artwork to the documentation rather than the
+other way round.
 
 ---
 
@@ -88,15 +108,29 @@ redraw brings the artwork to the documentation rather than the other way round.
 ### The mark is drawn in UM house style
 
 Each of the mark's three non-green colours resolves to a published UM colour.
-Distances are ΔE in OKLab ×100; below about 5 the two read as the same colour
-rendered slightly differently.
+Measured against the **original artwork**. Distances are ΔE in OKLab ×100; below
+about 5 the two read as the same colour rendered slightly differently.
 
-| In the mark | UM house style | ΔE | What drifted |
+| In the mark | UM value | ΔE | Source |
 |---|---|---|---|
-| `#02264C` navy | **UM Blue** `#001C3D` | 4.2 | same hue (253.5° vs 253.9°), lighter |
-| `#00B1DC` blue | **UM light blue** `#00A2DB` | 4.3 | slightly lighter and cooler |
-| `#BA5726` warm | **UM orange-red** `#D2460F` | 4.9 | same hue (44° vs 38°), much duller |
-| `#4AA519` green | — | 24.2 | no UM equivalent exists |
+| `#02264C` navy | **UM Blue** `#001C3D` | 4.2 | style guide |
+| `#00B1DC` blue | **UM light blue** `#00A2DB` | 4.3 | style guide |
+| `#FE6107` orange | **UM orange** `#EB5B25` | 4.1 | `brand_colours.csv` |
+| `#4AA718` green | — | 24+ | no UM equivalent exists |
+
+**The orange belongs to the UM secondary palette, not to the institutional
+orange-red.** `#D2460F` is 10.5 ΔE from the mark's orange — a different colour,
+darker and redder. It appears in this sheet only where UM publishes it as a web
+value, on link hover. If you want one warm colour everywhere rather than two,
+that is a decision to take deliberately; the mark is what would have to change.
+
+Two UM palettes are in play and they are not the same list. The authoritative web
+spec is `~/Documents/10_Admin/TGX/UM_style_guide/UM_style_guide.zip` (UM Blue,
+`#1E5A96`, `#D2460F`, `#333333`, `#E3E3E3`) and everything in this sheet except
+`--orange` comes from it. `~/Documents/10_Admin/TGX/brand_colours.csv` is a
+different, broader palette whose primaries (`#29235C`, `#E6007E`, `#307BBF`) do not
+appear in the style guide at all; `--orange` is its secondary orange, because that
+is what the mark is drawn in.
 
 The nearest UM swatch to the green is 24 ΔE away, which is not a match in any
 useful sense. The green is BOP-Hub's own, and in the mark it is the node the
@@ -110,8 +144,8 @@ Fills and rules. They never carry text.
 |---|---|---|---|
 | `--navy` | `#001C3D` | UM Blue | 17.02 : 1 |
 | `--blue` | `#00A2DB` | UM light blue | 2.92 : 1 |
-| `--orange` | `#D2460F` | UM orange-red | 4.54 : 1 |
-| `--green` | `#4AA519` | the mark's own | 3.14 : 1 |
+| `--orange` | `#EB5B25` | UM secondary orange | 3.47 : 1 |
+| `--green` | `#4AA718` | the mark's own | 3.07 : 1 |
 
 `--rust` is an alias of `--orange`, kept so nothing written in November 2026
 breaks. Prefer `--orange`; `--rust` should be deleted.
@@ -130,7 +164,7 @@ than a derived one.
 | `--orange-ink` | `#AE0B12` | UM orange-red, institutional | 7.35 : 1 | 6.86 : 1 |
 | `--green-ink` | `#377F11` | derived | 4.99 : 1 | 4.66 : 1 |
 | `--link` | `#1E5A96` | UM link default | 7.10 : 1 | 6.62 : 1 |
-| `--link-hover` | `#D2460F` | UM link hover | 4.54 : 1 | 4.24 : 1 |
+| `--link-hover` | `#D2460F` | UM link hover, library | 4.54 : 1 | 4.24 : 1 |
 | `--ink` | `#333333` | UM body text | 12.63 : 1 | 11.79 : 1 |
 | `--muted` | `#565C66` | derived | 6.73 : 1 | 6.28 : 1 |
 
@@ -229,7 +263,7 @@ its rank: if a filter removes a series, the survivors keep their colours.
 |---|---|---|---|
 | 1 | `#1478A1` blue | UM light blue, darkened | `--series-1` |
 | 2 | `#AE0B12` orange-red | UM institutional | `--series-2` |
-| 3 | `#4AA519` green | the mark's own | `--series-3` |
+| 3 | `#4AA718` green | the mark's own | `--series-3` |
 | 4 | `#B972F1` violet | extension | `--series-4` |
 | 5 | `#81168C` plum | extension | `--series-5` |
 | Other | `#6B7785` grey | extension | `--series-other` |

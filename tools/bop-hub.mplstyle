@@ -2,7 +2,7 @@
 # also installs the colour cycle for dark grounds. Values are explained in BRAND.md.
 
 # -- colour cycle: assigned in order, never extended beyond five --------------
-axes.prop_cycle: cycler('color', ['1478A1', 'AE0B12', '4AA519', 'B972F1', '81168C'])
+axes.prop_cycle: cycler('color', ['1478A1', 'AE0B12', '4AA718', 'B972F1', '81168C'])
 
 # -- type ---------------------------------------------------------------------
 font.family:        sans-serif

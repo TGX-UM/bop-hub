@@ -1,11 +1,14 @@
 """BOP-Hub figure palette.
 
-The single Python source for BOP-Hub colours. The palette IS the Maastricht
-University house style: the mark's three non-green colours each resolve to a UM
-colour that the image generator rendered slightly off (navy dE 4.2, blue dE 4.3,
-orange-red dE 4.9). The values below are the OFFICIAL UM ones, not the sampled
-ones. The green is the one colour with no UM equivalent. Reasoning in BRAND.md;
-the CSS copies are in assets/main.scss.
+The single Python source for BOP-Hub colours. The palette is Maastricht University
+house style: measured against the ORIGINAL artwork, the mark's three non-green
+colours each resolve to a UM colour rendered slightly off (navy dE 4.2, blue
+dE 4.3, orange dE 4.1). The values below are the official UM ones, not the
+samples. The green is the one colour with no UM equivalent.
+
+Do not re-sample assets/img/bop-hub-logo-master.png: its 64-colour palette
+reduction merged the orange to #BA5726, 13.3 dE off the artwork. Reasoning in
+BRAND.md; the CSS copies are in assets/main.scss.
 
     from tools.bophub_palette import SERIES, use_style
     use_style()
@@ -36,10 +39,10 @@ __all__ = [
 ]
 
 # -- house style: fills and rules, never text ---------------------------------
-NAVY   = "#001C3D"   # UM Blue
-BLUE   = "#00A2DB"   # UM light blue
-ORANGE = "#D2460F"   # UM orange-red
-GREEN  = "#4AA519"   # the mark's green; no UM equivalent
+NAVY   = "#001C3D"   # UM Blue, style guide
+BLUE   = "#00A2DB"   # UM light blue, style guide
+ORANGE = "#EB5B25"   # UM secondary orange, brand_colours.csv
+GREEN  = "#4AA718"   # the mark's green; no UM equivalent
 RUST   = ORANGE      # alias kept for 2026-11 code; prefer ORANGE
 
 # -- darkened variants: the only ones allowed to carry text -------------------
@@ -49,7 +52,7 @@ BLUE_INK   = "#1478A1"   # derived            4.96 / 4.63
 ORANGE_INK = "#AE0B12"   # UM institutional   7.35 / 6.86
 GREEN_INK  = "#377F11"   # derived            4.99 / 4.66
 LINK       = "#1E5A96"   # UM link default    7.10 / 6.62
-LINK_HOVER = "#D2460F"   # UM link hover      4.54 / 4.24
+LINK_HOVER = "#D2460F"   # UM link hover, library implementation. 4.54 / 4.24
 INK        = "#333333"   # UM body text      12.63 / 11.79
 MUTED      = "#565C66"   # derived            6.73 / 6.28
 

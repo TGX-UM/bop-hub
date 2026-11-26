@@ -5,19 +5,25 @@
 /* ==========================================================================
    BOP-Hub stylesheet
 
-   The palette IS the Maastricht University house style. The mark's three
-   non-green colours were checked against the UM style guide and each is a UM
-   colour rendered slightly off by the image generator:
+   The palette is Maastricht University house style. Measured against the
+   ORIGINAL artwork (~/Downloads/BOP_Hub_logo_Final_png.png), each of the mark's
+   three non-green colours is a UM colour rendered slightly off:
 
-     mark navy  #02264C  ->  UM Blue          #001C3D   dE 4.2
-     mark blue  #00B1DC  ->  UM light blue    #00A2DB   dE 4.3
-     mark warm  #BA5726  ->  UM orange-red    #D2460F   dE 4.9
+     mark navy   #02264C  ->  UM Blue        #001C3D  dE 4.2   (style guide)
+     mark blue   #00B1DC  ->  UM light blue  #00A2DB  dE 4.3   (style guide)
+     mark orange #FE6107  ->  UM orange      #EB5B25  dE 4.1   (brand_colours.csv)
 
-   The tokens below carry the OFFICIAL UM values, not the sampled ones. The
-   logo file is the lossy artifact; the house style is the source. The green
-   is the one colour with no UM equivalent (nearest swatch is dE 24 away) --
-   in the mark it is the node the pathway resolves into, so here it means
-   exactly that.
+   The orange belongs to the UM SECONDARY palette, not to the institutional
+   orange-red #D2460F, which is 10.5 dE away and visibly darker and redder.
+   #D2460F appears below only where UM publishes it as a web value, on hover.
+
+   The green is the one colour with no UM equivalent (nearest swatch 24 dE
+   away) -- in the mark it is the node the pathway resolves into, so here it
+   means exactly that.
+
+   NOTE: assets/img/bop-hub-logo-master.png is NOT a reliable sample. Its
+   64-colour palette reduction merged the orange to #BA5726, 13.3 dE off. The
+   served bop-hub-logo.png is intact. Regenerate the master before reusing it.
 
    UM documents that several house-style colours do not meet WCAG contrast and
    its own library works from darkened variants for text. The same is done here.
@@ -25,8 +31,8 @@
    used for FILLS AND RULES ONLY; the matching -ink token is the darkened
    variant and is the only one allowed to carry text. Where UM publishes an
    accessible variant of its own (#AE0B12, #1E5A96), that value is used rather
-   than a derived one. Derived values are marked. See BRAND.md for the
-   arithmetic. The mark itself is never recoloured.
+   than a derived one. Derived values are marked. See BRAND.md.
+   The mark itself is never recoloured.
 
    Two rules carry meaning rather than decoration, and the rest of the sheet
    stays out of their way:
@@ -45,10 +51,9 @@
   /* ---- house style: fills and rules, never text ------------------------ */
   --navy:        #001c3d;   /* UM Blue. Header type, headings */
   --blue:        #00a2db;   /* UM light blue */
-  --orange:      #d2460f;   /* UM orange-red. The initiating event */
-  --green:       #4aa519;   /* the mark's green. The beneficial outcome */
-  --rust:        var(--orange);  /* alias, 2026-11: the mark renders the orange
-                                    dark. Prefer --orange. */
+  --orange:      #eb5b25;   /* UM secondary orange. The initiating event */
+  --green:       #4aa718;   /* the mark's green. The beneficial outcome */
+  --rust:        var(--orange);  /* alias, 2026-11. Prefer --orange. */
 
   /* ---- darkened variants, the only ones allowed to carry text ---------- */
   /* Ratios are white / --wash. UM's own #007FAD reaches 4.53 on white but
@@ -59,7 +64,7 @@
 
   /* ---- interface -------------------------------------------------------- */
   --link:        #1e5a96;   /* UM link default. 7.10 / 6.62 */
-  --link-hover:  #d2460f;   /* UM link hover */
+  --link-hover:  #d2460f;   /* UM link hover, library implementation */
   --ink:         #333;      /* UM body text. 12.63 / 11.79 */
   --muted:       #565c66;   /* derived; UM's #999 is 2.85 and cannot carry text */
   --rule:        #e3e3e3;   /* UM light grey */
@@ -74,7 +79,7 @@
      Slots 1-3 are the UM hues; 4-5 extend away from them. */
   --series-1:    #1478a1;   /* UM light blue, darkened */
   --series-2:    #ae0b12;   /* UM orange-red, institutional */
-  --series-3:    #4aa519;   /* the mark's green */
+  --series-3:    #4aa718;   /* the mark's green */
   --series-4:    #b972f1;   /* violet */
   --series-5:    #81168c;   /* plum */
   --series-other:#6b7785;   /* the "Other" bucket, never a 6th identity */
