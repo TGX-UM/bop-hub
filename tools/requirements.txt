@@ -2,3 +2,6 @@
 PyYAML==6.0.2
 jsonschema==4.23.0
 rdflib==7.6.0
+
+# Not used by validate.py, so not installed in CI. vectorise_logo.py needs it:
+#   pip install potracer

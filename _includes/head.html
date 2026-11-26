@@ -7,6 +7,10 @@
     property.
   {%- endcomment -%}
   {% seo %}
+  <!-- SVG first: browsers that take it get a sharp tab icon at any size, which
+       the 16px raster cannot be -- the B carries three node rings and they
+       collapse below about 24px. The rasters stay for everything else. -->
+  <link rel="icon" type="image/svg+xml" href="{{ '/assets/img/bop-hub-mark.svg' | relative_url }}">
   <link rel="icon" href="{{ '/assets/img/favicon.ico' | relative_url }}" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/img/favicon-32x32.png' | relative_url }}">
   <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/img/favicon-16x16.png' | relative_url }}">

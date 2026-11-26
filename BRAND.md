@@ -28,15 +28,40 @@ table below.
 
 ### Files
 
-| File | Size | Use |
-|---|---|---|
-| `bop-hub-logo-master.png` | 1200 × 600 | Archive master. Never embed this directly. |
-| `bop-hub-logo.png` | 420 × 172 | The lockup, trimmed to the ink box. Site header, slides, posters. |
-| `bop-hub-mark.png` | 512 × 512 | The B alone. Avatars, favicons, anywhere under ~140 px wide. |
-| `favicon-16x16.png`, `favicon-32x32.png`, `favicon.ico`, `apple-touch-icon.png` | — | Browser and device icons. |
+**The SVG is the master.** Everything else is an export from it.
 
-The lockup's ink box is 1048 × 424, an aspect of **2.47 : 1**. Any rendering that
-is not 2.47 : 1 has been stretched; fix it rather than nudging it.
+| File | Use |
+|---|---|
+| `bop-hub-logo.svg` | The lockup. Site header, slides, posters, anything at any size. |
+| `bop-hub-logo-reversed.svg` | The lockup on a dark ground — navy knocked out to white. |
+| `bop-hub-mark.svg` | The B alone, square. Avatars, app icons, anywhere under ~140 px wide. |
+| `bop-hub-mark-reversed.svg` | The B alone on a dark ground. |
+| `bop-hub-logo.png`, `bop-hub-mark.png`, `apple-touch-icon.png`, `favicon-*` | Raster exports, for the places that still need one. |
+
+The SVGs were traced from the original artwork by `tools/vectorise_logo.py`, which
+unmixes each antialiased pixel back to the ink that made it, traces each ink
+separately with potrace, and fills the result with the house-style hexes of §2.
+Geometry is the artwork's; colour is the documentation's. Re-run it only if the
+artwork is replaced:
+
+```sh
+pip install potracer
+python3 tools/vectorise_logo.py <original.png> --out assets/img/bop-hub-logo.svg
+```
+
+The raster exports come from the SVG, not from each other:
+
+```sh
+inkscape -w 420 -o assets/img/bop-hub-logo.png assets/img/bop-hub-logo.svg
+```
+
+**Do not regenerate a PNG from another PNG, and do not reduce the palette.** That
+is what corrupted the old master (below).
+
+The lockup's viewBox is 1548.67 × 626.67, an aspect of **2.47 : 1**. Any rendering
+that is not 2.47 : 1 has been stretched; fix it rather than nudging it. The mark is
+square. Both carry their ink to the edge of the box, so clear space (below) has to
+be added by whatever places them.
 
 ### What it shows
 
@@ -51,21 +76,28 @@ BOP-Hub's own and not the department's.
 - **Clear space** on all four sides is one quarter of the lockup's height
   (106 px at master scale). Nothing — no rule, no text, no photo edge — enters it.
 - **Minimum size** for the lockup is **140 px** wide on screen, **35 mm** in print.
-  Below that, "Hub" closes up. Use `bop-hub-mark.png` instead.
+  Below that, "Hub" closes up. Use the mark instead.
+- **The mark has a floor of its own, around 24 px.** The B carries three node rings
+  and they collapse into a blur below that; the 16 px favicon is mush and no
+  rendering trick fixes it, because the artwork is simply too detailed at that
+  size. The site declares the SVG as its first `rel="icon"`, so browsers that take
+  one get a sharp tab icon and never see the 16 px raster. If the 16 px version
+  ever has to carry weight, it needs a simplified glyph drawn for it — the B
+  silhouette without the rings — which is new artwork, not an export.
 - The site header renders the lockup at 182 px, dropping to 150 px under 40 rem.
 
 ### Rules
 
-- The mark is **never recoloured**, including to a single-colour version. There is
-  no approved mono variant; if you need one, ask for it to be drawn rather than
-  flattening the file yourself.
-- It sits on **white or `--wash`**. It is a navy wordmark on paper and has no
-  knocked-out version, which is why the site header is white rather than navy.
+- **Use one of the four files; never recolour one by hand.** On a dark ground take
+  the reversed variant, which knocks the navy out to white — without it the whole
+  wordmark disappears on anything near UM Blue. For single-colour print, generate a
+  mono version with `--mono <hex>` rather than flattening a file in an editor.
+- The ink colours are fixed. The only thing a variant may change is navy → white.
 - Do not add a drop shadow, outline, gradient or container box.
 - Do not set the word "BOP-Hub" in type next to the mark. The mark is the wordmark.
 - Alt text is `BOP-Hub`, not a description of the drawing.
 
-### Known problem: the archive master is corrupt
+### Fixed: the archive master was corrupt
 
 `bop-hub-logo-master.png` exists so the other files can be regenerated from it.
 It cannot be used for that. Generating the derivatives re-encoded everything to a
@@ -80,26 +112,17 @@ orange:
 | **orange** | **`#FE6107`** | **`#BA5726`** | **13.3** |
 
 A ΔE of 13 is not a rounding difference; it is a bright orange turned into a muddy
-rust. The served `bop-hub-logo.png` is **fine** (`#FE6309`), so nothing on the site
-is wrong today — but regenerate from the master and the corruption propagates into
-every derivative at once.
+rust. It also cost a round of analysis: sampling the master is the obvious thing to
+do, and it makes the stylesheet's orange look invented when it was correct.
 
-Two things to do:
+The vector master removes the whole failure mode — colour now lives in the file as
+a named hex rather than as pixels that a re-encoding can move, and the exports come
+from it rather than from each other. The raster master has been regenerated from
+the SVG and is no longer a reference for anything.
 
-1. **Move `~/Downloads/BOP_Hub_logo_Final_png.png` somewhere durable** —
-   `10_Admin/TGX/logo/` beside the TGX marks, or the BOP project folder. Downloads
-   gets triaged, and it is currently the only uncorrupted copy of the artwork.
-2. **Regenerate the master from it without the palette reduction**, or with a
-   palette that keeps the orange.
-
-### Known gap: there is no vector master
-
-Every file is raster, upscaled from a generated image, and its edges carry
-compression noise. Survivable on screen; at poster scale it is not — a 1200 px
-master at A0 is roughly 40 px/inch. Redraw the mark as SVG on the hexes in §2
-before the first printed poster or any journal figure. The tokens already carry
-those values, so the redraw brings the artwork to the documentation rather than the
-other way round.
+**One thing still to do:** `~/Downloads/BOP_Hub_logo_Final_png.png` is the original
+artwork and the only place the untouched pixels exist. Downloads gets triaged. Move
+it to `10_Admin/TGX/logo/` beside the TGX marks, or to the BOP project folder.
 
 ---
 
