@@ -43,11 +43,6 @@
       },
       "required": ["name"],
       "additionalProperties": false
-    },
-    "applicability": {
-      "taxa": {"$ref": "_defs#/$defs/curieList"},
-      "sex": {"$ref": "_defs#/$defs/curieList"},
-      "life_stage": {"$ref": "_defs#/$defs/curieList"}
     }
   }
 }
