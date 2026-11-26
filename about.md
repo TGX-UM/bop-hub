@@ -89,8 +89,8 @@ against the content schema.</p>
 <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>, so use it however
 you like without asking. The site code is MIT, and its scaffolding derives from the
 <a href="https://github.com/wikipathways/Jiffy">Jiffy</a> template by the WikiPathways
-team. A machine-readable dump lives at
-<a href="{{ '/api/bops.json' | relative_url }}">/api/bops.json</a> and
-<a href="{{ '/api/events.json' | relative_url }}">/api/events.json</a>.</p>
+team. Every record, including the prose below each page's front matter, is published as
+JSON at <a href="{{ '/api/' | relative_url }}">/api/</a> — the whole graph is about 13 KB
+gzipped, so it is meant to be downloaded and queried in one piece.</p>
 
 </div>

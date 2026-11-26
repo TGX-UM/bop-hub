@@ -8,6 +8,11 @@ name: Deploy Jekyll site to Pages
 
 on:
   workflow_dispatch:
+  # A quiet repository has its Pages workflow disabled after 60 days, which
+  # looks like a broken site rather than a disabled workflow. A weekly build
+  # also refreshes api/v1's `generated`.
+  schedule:
+    - cron: '0 4 * * 1'
   push:
     branches: [main]
     paths-ignore:
@@ -38,6 +43,12 @@ jobs:
           ruby-version: '3.3'
           bundler-cache: true
           cache-version: 0
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install content tooling
+        run: pip install -r tools/requirements.txt
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v6
@@ -47,6 +58,22 @@ jobs:
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+      # AFTER the Jekyll build, never before: Jekyll deletes anything in the
+      # destination it did not generate, so an api/v1 written first is thrown
+      # away silently and the site deploys with a dead API.
+      - name: Export the read API
+        run: python tools/export.py --out _site/api/v1 --site-url "${{ steps.pages.outputs.base_url }}"
+      # A broken export would otherwise deploy a perfect-looking site whose
+      # API is missing, and nothing would go red.
+      - name: Check the API was written
+        run: |
+          test -f _site/api/v1/index.json || { echo "api/v1/index.json is missing"; exit 1; }
+          for c in bops events relationships annotations; do
+            on_disk=$(ls -1 "_${c}" | wc -l)
+            in_dump=$(python3 -c "import json;print(json.load(open('_site/api/v1/index.json'))['counts']['$c'])")
+            echo "$c: $on_disk on disk, $in_dump in the dump"
+            [ "$on_disk" = "$in_dump" ] || { echo "count mismatch for $c"; exit 1; }
+          done
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
 
