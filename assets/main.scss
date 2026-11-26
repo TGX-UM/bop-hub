@@ -28,9 +28,15 @@
    ========================================================================== */
 
 :root {
-  --navy:        #001c3d;   /* house-style dark blue: headers, headings */
-  --blue:        #00a2db;   /* the mark's blue -- fills and rules only */
-  --orange:      #e84e10;   /* the mark's orange -- fills and rules only */
+  /* Sampled from the BOP-Hub mark itself, which sits inside the UM palette:
+     its navy is a shade of the house-style #001C3D and its blue and orange are
+     the department's. The green has no house-style equivalent -- in the mark it
+     is the node the pathway resolves into, so here it means exactly that. */
+  --navy:        #02264c;   /* the mark's navy: header type, headings */
+  --blue:        #00b1dc;   /* the mark's blue -- fills and rules only */
+  --orange:      #fe6107;   /* the mark's orange -- fills and rules only */
+  --green:       #4aa618;   /* the mark's green: the beneficial outcome */
+  --green-ink:   #3d8a14;   /* darkened for anything that has to be read */
 
   --link:        #0076a8;   /* darkened accent, 5.1:1 on white */
   --link-hover:  #d2460f;   /* house-style hover */
@@ -93,18 +99,26 @@ code, .mono { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, mono
          font-size: .8rem; color: var(--muted); }
 
 /* ---- header ------------------------------------------------------------ */
-.site-head { background: var(--navy); color: #fff; }
-.site-head .wrap { display: flex; flex-wrap: wrap; align-items: baseline;
-                   gap: .4rem 1.5rem; padding-top: .9rem; padding-bottom: .9rem; }
-.site-head a { color: #fff; text-decoration: none; }
-.site-name { font-size: 1.2rem; font-weight: 700; letter-spacing: -.01em; }
-.site-name:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
-.site-tag { color: #b9c4d2; font-size: .9rem; margin-right: auto; }
+/* White, not navy: the logo is a navy wordmark on paper, and knocking it out
+   to white would mean maintaining a second version of someone else's artwork. */
+.site-head { background: var(--paper); border-bottom: 1px solid var(--rule); }
+.site-head .wrap { display: flex; flex-wrap: wrap; align-items: center;
+                   gap: .5rem 1.5rem; padding-top: .8rem; padding-bottom: .8rem; }
+.site-logo { display: block; line-height: 0; }
+.site-logo img { width: 182px; height: auto; }
+.site-tag { color: var(--muted); font-size: .9rem; margin-right: auto;
+            align-self: center; max-width: 26ch; line-height: 1.3; }
 .site-nav { display: flex; flex-wrap: wrap; gap: 1.1rem; font-size: .95rem; }
-.site-nav a:hover, .site-nav a[aria-current="page"] {
-  text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px;
+.site-nav a { color: var(--navy); text-decoration: none; font-weight: 600; }
+.site-nav a:hover { color: var(--link-hover); text-decoration: underline;
+                    text-underline-offset: 4px; }
+.site-nav a[aria-current="page"] { text-decoration: underline;
+  text-underline-offset: 4px; text-decoration-thickness: 2px;
+  text-decoration-color: var(--blue); }
+@media (max-width: 40rem) {
+  .site-tag { display: none; }
+  .site-logo img { width: 150px; }
 }
-.site-nav a[aria-current="page"] { text-decoration-color: var(--blue); }
 
 /* ---- role encoding ----------------------------------------------------- */
 /* The one place colour carries meaning. Each role keeps a shape cue too, so
@@ -113,7 +127,7 @@ code, .mono { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, mono
 .role::before { content: ""; display: inline-block; width: .55rem; height: .55rem;
                 margin-right: .4rem; vertical-align: baseline; background: var(--navy); }
 .role-initiating::before { background: var(--orange); border-radius: 50%; }   /* round: the trigger */
-.role-outcome::before    { background: var(--blue); }                          /* square: the endpoint */
+.role-outcome::before    { background: var(--green); }                         /* square: the endpoint */
 .role-key::before        { background: transparent; border: 2px solid var(--rule-strong);
                            transform: rotate(45deg); }                         /* diamond: in between */
 
@@ -130,7 +144,7 @@ tbody tr:hover { background: var(--wash); }
 /* An event row carries its role on its leading edge. */
 .ev-row { border-left: 4px solid var(--rule-strong); }
 .ev-row.is-initiating { border-left-color: var(--orange); }
-.ev-row.is-outcome    { border-left-color: var(--blue); }
+.ev-row.is-outcome    { border-left-color: var(--green); }
 
 /* ---- evidence glyph ---------------------------------------------------- */
 /* Three bars, filled by grade, followed by the word. Never colour-coded. */

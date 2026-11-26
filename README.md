@@ -1,3 +1,5 @@
+<img src="assets/img/bop-hub-logo.png" alt="BOP-Hub" width="260">
+
 # BOP-Hub
 
 **A community-curated knowledge base of Beneficial Outcome Pathways: causal chains

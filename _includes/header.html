@@ -1,6 +1,9 @@
 <header class="site-head">
   <div class="wrap">
-    <a class="site-name" href="{{ '/' | relative_url }}">BOP-Hub</a>
+    <a class="site-logo" href="{{ '/' | relative_url }}">
+      <img src="{{ '/assets/img/bop-hub-logo.png' | relative_url }}"
+           width="420" height="172" alt="BOP-Hub">
+    </a>
     <span class="site-tag">{{ site.tagline }}</span>
     <nav class="site-nav" aria-label="Main">
       <a href="{{ '/browse/bops/' | relative_url }}"{% if page.url contains '/browse/bops' %} aria-current="page"{% endif %}>Pathways</a>
