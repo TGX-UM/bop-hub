@@ -18,7 +18,7 @@ url: "https://tgx-um.github.io"
 # Kept committed so a local `jekyll serve` matches production. CI overrides it
 # with --baseurl "${{ steps.pages.outputs.base_path }}", so moving to a custom
 # domain is a settings change, not a commit.
-baseurl: "/bop-hub"
+baseurl: "/"
 
 github_username: TGX-UM
 github_repo: bop-hub
