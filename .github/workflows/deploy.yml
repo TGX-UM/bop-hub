@@ -62,7 +62,9 @@ jobs:
       # destination it did not generate, so an api/v1 written first is thrown
       # away silently and the site deploys with a dead API.
       - name: Export the read API
-        run: python tools/export.py --out _site/api/v1 --site-url "${{ steps.pages.outputs.base_url }}"
+        env:
+          BASE_URL: ${{ steps.pages.outputs.base_url }}
+        run: python tools/export.py --out _site/api/v1 --site-url "${BASE_URL/#http:\/\//https://}"
       # A broken export would otherwise deploy a perfect-looking site whose
       # API is missing, and nothing would go red.
       - name: Export RDF
