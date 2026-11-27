@@ -14,7 +14,7 @@ description: >-
   key events to a beneficial health outcome. The beneficial counterpart to
   AOP-Wiki.
 
-url: "https://tgx-um.github.io"
+url: "https://bop-hub.tgx-um.nl"
 # Kept committed so a local `jekyll serve` matches production. CI overrides it
 # with --baseurl "${{ steps.pages.outputs.base_path }}", so moving to a custom
 # domain is a settings change, not a commit.

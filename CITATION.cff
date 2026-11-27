@@ -14,7 +14,7 @@ authors:
     orcid: "https://orcid.org/0000-0003-2230-0840"
     affiliation: "Department of Translational Genomics, Maastricht University"
 repository-code: "https://github.com/TGX-UM/bop-hub"
-url: "https://tgx-um.github.io/bop-hub/"
+url: "https://bop-hub.tgx-um.nl/"
 license:
   - CC0-1.0
   - MIT
